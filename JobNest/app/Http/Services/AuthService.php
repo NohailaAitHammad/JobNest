@@ -28,11 +28,14 @@ class AuthService
     {
         $validatedUser = $request->validated();
         if(Auth::attempt($request->only('email', 'password'))){
-            if(auth()->user()->role_id === 1){
+            //dd(auth()->user()->role->role);
+            if(auth()->user()->role->role === 'admin'){
                 return 'admin';
-            }else if(auth()->user()->role_id === 2){
+            }else if(auth()->user()->role->role === 'recruter'){
+
+
                 return 'recruter';
-            }else if(auth()->user()->role_id === 3){
+            }else if(auth()->user()->role->role === 'condidat'){
                 return 'condidat';
             }else{
                 return 'user';

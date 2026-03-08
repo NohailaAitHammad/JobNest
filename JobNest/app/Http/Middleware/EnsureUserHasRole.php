@@ -16,8 +16,7 @@ class EnsureUserHasRole
      */
     public function handle(Request $request, Closure $next, string $role): Response
     {
-        $roleId  = Role::where('role', $role)->first();
-        if($request->user()->role_id === $roleId->id){
+        if($request->user()->role->role === $role){
             return $next($request);
         }
         return abort(403, 'Access non authorise');
