@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Http\Requests\LoginRequest;
+use App\Models\Candidat;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;

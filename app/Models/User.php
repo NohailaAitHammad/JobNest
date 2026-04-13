@@ -20,16 +20,10 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'firstName',
-        'lastName',
-        'email',
-        'password',
-        'imageURL',
-        'ville',
-        'telephone',
-        'role_id',
-
+        'firstName', 'lastName', 'email',
+        'password', 'status', 'banned_at'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -51,6 +45,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status'    => StatusUser::class,
+            'banned_at' => 'datetime',
         ];
     }
 
@@ -59,14 +55,61 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function condidat()
+    public function profileCandidat()
     {
-        return $this->hasOne(Candidat::class);
+        return $this->hasOne(ProfileCandidat::class);
+    }
+
+    public function profileRecruteur()
+    {
+        return $this->hasOne(ProfileRecruteur::class);
+    }
+
+    public function propositionsEnvoyees()
+    {
+        return $this->hasMany(Proposition::class, 'recruteur_id');
+    }
+
+    public function propositionsRecues()
+    {
+        return $this->hasMany(Proposition::class, 'candidat_id');
+    }
+
+    public function profilesVus()
+    {
+        return $this->hasMany(ProfileView::class, 'recruteur_id');
+    }
+
+    public function vues()
+    {
+        return $this->hasMany(ProfileView::class, 'candidat_id');
+    }
+
+    // Helpers
+    public function hasRole(string $role): bool
+    {
+        return $this->roles()->where('role', $role)->exists();
+    }
+
+    public function isCandidat(): bool
+    {
+        return $this->hasRole('condidat');
+    }
+
+    public function isRecruteur(): bool
+    {
+        return $this->hasRole('recruteur');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->status === StatusUser::banni;
     }
 
 
-    public function competences()
-    {
-        return $this->hasMany(Competence::class);
-    }
 }

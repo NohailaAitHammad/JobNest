@@ -13,7 +13,11 @@ class CandidatController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json([
+            "success" => true,
+            "message" => "Liste des profiles candidats",
+            "data" => Candidat::with('user')->get()
+        ]);
     }
 
     /**

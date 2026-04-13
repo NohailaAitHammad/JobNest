@@ -11,9 +11,11 @@ class Competence extends Model
     use SoftDeletes;
     protected $fillable = ['libelle', 'deleted_at'];
 
-    public function user()
+
+    public function profileCandidats()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(ProfileCandidat::class)
+            ->withPivot('niveau');
     }
 
 }

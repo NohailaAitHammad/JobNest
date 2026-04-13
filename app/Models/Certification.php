@@ -4,15 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Experience extends Model
+class Certification extends Model
 {
     public $timestamps = false;
 
     protected $fillable = [
         'profile_candidat_id',
-        'poste', 'entreprise',
-        'description',
-        'dateDebut', 'dateFin'
+        'titre', 'organisme',
+        'dateObtention'
     ];
 
     public function profileCandidat()

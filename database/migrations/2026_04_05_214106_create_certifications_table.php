@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('condidats', function (Blueprint $table) {
+        Schema::create('certifications', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('profile_candidat_id')
+                ->constrained()->onDelete('cascade');
+            $table->string('titre');
+            $table->string('organisme');
+            $table->date('dateObtention');
         });
     }
 
@@ -22,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('condidats');
+        Schema::dropIfExists('certifications');
     }
 };
