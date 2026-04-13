@@ -19,8 +19,6 @@ class EnsureUserHasRole
         if($request->user()->role->role === $role){
             return $next($request);
         }
-        return abort(403, 'Access non authorise');
-
-        return $next($request);
+         abort(403, 'Access non authorise');
     }
 }

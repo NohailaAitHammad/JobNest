@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CandidatController;
 use App\Http\Controllers\API\CertificatController;
 use App\Http\Controllers\API\CompetenceController;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get("/candidats/{profileCandidat}", [CandidatController::class, "show"]);
+    Route::put("/candidats/{profileCandidat}", [CandidatController::class, "update"]);
+
 
     /*competences */
 });

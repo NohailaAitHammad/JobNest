@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\StatusUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +22,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'firstName', 'lastName', 'email',
-        'password', 'status', 'banned_at'
+        'password', 'status', 'banned_at', 'role_id'
     ];
 
 
