@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('recruteur_id')
                 ->constrained('users')->onDelete('cascade');
             $table->timestamp('viewed_at')->useCurrent();
+            $table->softDeletes();
+
         });
     }
 

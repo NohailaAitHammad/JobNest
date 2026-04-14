@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('telephone')->nullable();
             $table->string('poste')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine('innoDB');
         });
     }

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('duree');
             $table->enum('status', ['pending','accepter','refuser'])
                 ->default('pending');
+            $table->softDeletes();
             $table->timestamps();
 
         });

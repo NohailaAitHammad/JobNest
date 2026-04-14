@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProfileRecruteur extends Model
 {
-    protected $fillable = [
+    use SoftDeletes;
+    protected $fillable = ['id',
         'user_id', 'imageURL', 'ville',
         'telephone', 'poste', 'entreprise_id'
     ];

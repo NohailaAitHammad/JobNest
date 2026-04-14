@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->enum('role', ['candidat', 'recruteur', 'admin']);
             $table->timestamps();
+            $table->softDeletes();
             $table->engine('innoDB');
         });
     }

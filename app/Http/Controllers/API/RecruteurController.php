@@ -55,7 +55,8 @@ class RecruteurController extends Controller
      */
     public function update(RecruteurRequest $request, ProfileRecruteur $profileRecruteur)
     {
-        $profileRecruteur = $this->recruteurService->updateProfile($request, $profileRecruteur);
+
+        $this->recruteurService->updateProfile($request, $profileRecruteur);
         return response()->json([
             "success" => true,
             "message" => "¨Profile Candidat Modifier avec success",

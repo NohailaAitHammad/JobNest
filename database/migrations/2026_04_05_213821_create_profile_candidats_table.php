@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('portfolio_url')->nullable();
             $table->boolean('est_visible')->default(true);
             $table->timestamps();
+            $table->softDeletes();
             $table->engine('innoDB');
         });
     }

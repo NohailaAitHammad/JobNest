@@ -4,10 +4,13 @@ namespace App\Models;
 
 use App\Enums\Niveau;
 use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProfileCandidatCompetence extends Pivot
 {
-    protected $fillable = ["profile_candidat_id", "competence_id", "niveau", "deleted_at"];
+    use SoftDeletes;
+
+    protected $fillable = ['id',"profile_candidat_id", "competence_id", "niveau"];
 
     protected $casts = ["niveau" => Niveau::class];
 }

@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProfileCandidat extends Model
 {
-    protected $fillable = [
+    use SoftDeletes;
+
+    protected $fillable = ['id',
         'user_id', 'imageURL', 'ville',
         'telephone', 'cv_url',
         'portfolio_url', 'est_visible'

@@ -6,10 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileCandidatRequest;
 use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CandidatService;
-use App\Models\Candidat;
 use App\Models\ProfileCandidat;
 use App\Models\User;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 class CandidatController extends Controller
 {
@@ -101,7 +100,8 @@ class CandidatController extends Controller
         $this->candidatService->deleteProfileCandidat($request, $profileCandidat);
         return response()->json([
             "success" => true,
-            "message" => "Profile Candidat Supprimer avec success"
+            "message" => "Profile Candidat Supprimer avec success",
+            "data" => $request->user()
         ]);
 
     }

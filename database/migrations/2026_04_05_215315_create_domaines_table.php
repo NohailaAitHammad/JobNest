@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('domaines', function (Blueprint $table) {
             $table->id();
             $table->string("nomDomaine")->nullable();
-            $table->timestamp("deleted_at")->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

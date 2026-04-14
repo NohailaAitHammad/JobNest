@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('titre');
             $table->string('organisme');
             $table->date('dateObtention');
+            $table->softDeletes();
+
         });
     }
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('domaine_id')
                 ->constrained()->onDelete('cascade');
             $table->primary(['entreprise_id','domaine_id']);
+            $table->softDeletes();
         });
     }
 

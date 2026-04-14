@@ -5,10 +5,13 @@ namespace App\Models;
 use App\Enums\StatusProp;
 use App\Enums\TypeProp;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Proposition extends Model
 {
-    protected $fillable = [
+    use SoftDeletes;
+
+    protected $fillable = ['id',
         'recruteur_id', 'candidat_id',
         'titre', 'description',
         'type', 'duree', 'status'

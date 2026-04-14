@@ -20,7 +20,7 @@ return new class extends Migration
             $table->datetime('dateCreation')->nullable();
             $table->integer('nombreEmployees')->nullable();
             $table->text('description')->nullable();
-            $table->timestamp("deleted_at")->nullable();
+            $table->softDeletes();
             $table->timestamps();
             $table->engine('innoDB');
         });

@@ -23,7 +23,7 @@ class ProfileCandidatResource extends JsonResource
             "telephone" => $this->telephone,
             "image_url" => $this->imageURL,
             "portfolio_url" => $this->portfolio_url,
-            "cv_url" => $this->cvURL,
+            "cv_url" => $this->cv_url,
             "est_visible" => $this->est_visible,
             "competences" =>  CompetenceResource::collection($this->whenLoaded("competences")),
             "certifications" => CertificationResource::collection($this->whenLoaded("certifications")),

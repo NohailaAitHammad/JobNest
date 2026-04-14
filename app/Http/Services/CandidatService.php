@@ -6,7 +6,7 @@ use App\Http\Requests\ProfileCandidatRequest;
 use App\Models\ProfileCandidat;
 use App\Models\User;
 use GuzzleHttp\Psr7\UploadedFile;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -27,7 +27,7 @@ class CandidatService
         $validated = $request->validated();
         $validated["est_visible"] = true;
         $profileCandidat->update($validated);
-        return $profileCandidat;
+        return $profileCandidat->load(["user", "competences", "certifications", "experiences"]);
     }
 
     public function toggleVisibility(User $user)
@@ -82,13 +82,15 @@ class CandidatService
 
     public function deleteProfileCandidat(Request $request, ProfileCandidat $profileCandidat)
     {
-        if(auth()->id() !== $profileCandidat->user_id){
+        if($request->user()->id!== $profileCandidat->user_id){
             return response()->json([
                 "success" => false,
                 "message" => "Unauthorized"
             ], 403);
         }
+        $request->user()->currentAccessToken()->delete();
+
         $profileCandidat->delete();
-        return $request->user()->currentAccessToken()->delete();
+        $request->user()->delete();
     }
 }

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('niveau',
                 ['debutant','intermediaire','expert'])
                 ->default('debutant');
+            $table->softDeletes();
             $table->primary(['profile_candidat_id','competence_id']);
         });
     }

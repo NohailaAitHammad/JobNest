@@ -20,6 +20,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('dateDebut');
             $table->date('dateFin')->nullable();
+            $table->softDeletes();
+
         });
     }
 

@@ -28,6 +28,12 @@ class RecruteurService
 
     public function deleteProfileRecruteur(Request $request, ProfileRecruteur $profileRecruteur)
     {
+        if(!$request->user()){
+            return response()->json([
+                "success" => false,
+                "message" => "Unauthenticated"
+            ], 401);
+        }
         if(auth()->id() !== $profileRecruteur->user_id){
             return response()->json([
                 "success" => false,

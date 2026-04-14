@@ -6,12 +6,13 @@ use App\Enums\RoleUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    use HasFactory;
+    use SoftDeletes;
 
-    protected $fillable = ['role'];
+    protected $fillable = ['id','role'];
 
     protected $casts = ["role" => RoleUser::class];
     public function users() : HasMany

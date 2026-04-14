@@ -21,6 +21,7 @@ return new class extends Migration
                 ->default('active');
             $table->timestamp('banned_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine('innoDB');
         });
 

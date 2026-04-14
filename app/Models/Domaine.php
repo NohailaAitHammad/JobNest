@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Domaine extends Model
 {
     use SoftDeletes;
-    protected $fillable = ["nomDomaine", "deleted_at"];
+    protected $fillable = ['id',"nomDomaine"];
 
     public function entreprises()
     {
