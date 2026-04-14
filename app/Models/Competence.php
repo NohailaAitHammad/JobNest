@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Competence extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['libelle', 'deleted_at'];
+    protected $fillable = ['id','libelle', 'deleted_at'];
 
 
     public function profileCandidats()

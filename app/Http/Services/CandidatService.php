@@ -5,18 +5,21 @@ namespace App\Http\Services;
 use App\Http\Requests\ProfileCandidatRequest;
 use App\Models\ProfileCandidat;
 use App\Models\User;
+use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Http\Client\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CandidatService
 {
     public function getProfile(ProfileCandidat $profileCandidat)
     {
-        return $profileCandidat->load("user");
+        return ProfileCandidat::where("id", $profileCandidat->id)->with(["user", "competences", "certifications", "experiences"])->first();
     }
 
     public function createProfileCandidat(User $user)
     {
-        return ProfileCandidat::create(['user_id' => $user->id]);
+        return (ProfileCandidat::create(['user_id' => $user->id]))->with(["user", "competences", "certifications", "experiences"])->first();
     }
 
     public function updateProfile(ProfileCandidatRequest $request, ProfileCandidat $profileCandidat)
@@ -24,14 +27,24 @@ class CandidatService
         $validated = $request->validated();
         $validated["est_visible"] = true;
         $profileCandidat->update($validated);
-        return $profileCandidat->load("user");
+        return $profileCandidat;
     }
 
-    public function toggleVisibility()
+    public function toggleVisibility(User $user)
     {
-
+        $profileCandidat = ProfileCandidat::where('user_id', $user->id)->firstOrFail();
+        $profileCandidat->update([
+            'est_visible' => !$profileCandidat->est_visible
+        ]);
+        return $profileCandidat->est_visible;
     }
 
+    public function uploadCV(User $user, UploadedFile $file)
+    {
+        $path = $file->store('cvs', 'public');
+        ProfileCandidat::where('user_id', $user->id)->update(['cv_url' => $path]);
+        return $path;
+    }
     public function addExperience()
     {
 
@@ -65,5 +78,17 @@ class CandidatService
     public function getDashboardStats()
     {
 
+    }
+
+    public function deleteProfileCandidat(Request $request, ProfileCandidat $profileCandidat)
+    {
+        if(auth()->id() !== $profileCandidat->user_id){
+            return response()->json([
+                "success" => false,
+                "message" => "Unauthorized"
+            ], 403);
+        }
+        $profileCandidat->delete();
+        return $request->user()->currentAccessToken()->delete();
     }
 }

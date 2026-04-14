@@ -9,6 +9,7 @@ class Experience extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'id',
         'profile_candidat_id',
         'poste', 'entreprise',
         'description',

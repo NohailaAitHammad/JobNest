@@ -8,7 +8,8 @@ use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CandidatService;
 use App\Models\Candidat;
 use App\Models\ProfileCandidat;
-use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Http\Client\Request;
 
 class CandidatController extends Controller
 {
@@ -51,8 +52,7 @@ class CandidatController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Profile Candidat",
-            "data" => new ProfileCandidatResource($profileCandidat)
-
+            "data" =>new ProfileCandidatResource($profileCandidat)
         ]);
     }
 
@@ -61,19 +61,48 @@ class CandidatController extends Controller
      */
     public function update(ProfileCandidatRequest $request, ProfileCandidat $profileCandidat)
     {
-        $profileCandidat = $this->candidatService->updateProfile($request, $profileCandidat);
+         $this->candidatService->updateProfile($request, $profileCandidat);
         return response()->json([
             "success" => true,
-            "message" => "¨Profile Candidat Modifier avec success",
+            "message" => "Profile Candidat Modifier avec success",
             "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 
+    public function toggleVisibility(Request $request)
+    {
+        $user = $request->user();
+        $visible = $this->candidatService->toggleVisibility($user);
+        return response()->json([
+            "success" => true,
+            "message" => $visible ?  "Visibilité du Profile Candidat est active":"Visibilité du Profile Candidat est inactive",
+
+        ]);
+    }
+
+    public function uploadCV(Request $request)
+    {
+        $request->validate([
+            "cv_url" => "required|file|mimes:pdf|max:2048"
+        ]);
+        $path = $this->candidatService->uploadCV(auth()->user(), $request->file('cv_url'));
+        return response()->json([
+            "success" => true,
+            "message" => "CV importer avec success",
+            "path" => $path
+        ]);
+
+    }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfileCandidat $profileCandidat)
+    public function destroy(Request $request,ProfileCandidat $profileCandidat)
     {
+        $this->candidatService->deleteProfileCandidat($request, $profileCandidat);
+        return response()->json([
+            "success" => true,
+            "message" => "Profile Candidat Supprimer avec success"
+        ]);
 
     }
 }

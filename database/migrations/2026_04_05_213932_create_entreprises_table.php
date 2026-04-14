@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('entreprises', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')
+            $table->foreignId('profile_recruteur_id')
                 ->constrained()->onDelete('cascade');
             $table->string('nom');
             $table->string('ville');
             $table->datetime('dateCreation')->nullable();
             $table->integer('nombreEmployees')->nullable();
             $table->text('description')->nullable();
+            $table->timestamp("deleted_at")->nullable();
             $table->timestamps();
             $table->engine('innoDB');
         });

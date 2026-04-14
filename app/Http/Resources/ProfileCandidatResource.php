@@ -17,13 +17,17 @@ class ProfileCandidatResource extends JsonResource
     {
         return  [
             "id" => $this->id,
+            "user_id" => $this->user_id,
             "user" => new UserResource($this->user),
             "ville" => $this->ville,
             "telephone" => $this->telephone,
             "image_url" => $this->imageURL,
             "portfolio_url" => $this->portfolio_url,
             "cv_url" => $this->cvURL,
-            "est_visible" => $this->est_visible
+            "est_visible" => $this->est_visible,
+            "competences" =>  CompetenceResource::collection($this->whenLoaded("competences")),
+            "certifications" => CertificationResource::collection($this->whenLoaded("certifications")),
+            "experiences" => ExperienceResource::collection($this->whenLoaded("experiences"))
             ];
     }
 }

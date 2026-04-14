@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\ProfileCandidatResource;
+use App\Http\Resources\ProfileRecruteurResource;
 use App\Http\Resources\UserResource;
 use App\Http\Services\AuthService;
 use App\Http\Services\CandidatService;
@@ -44,15 +45,15 @@ class AuthController extends Controller
     }
     public function registerRrecruter(RegisterRequest $request)
     {
-//        $role = Role::where('role', RoleUser::recruteur)->first();
-//        $data = $this->authService->register($request, $role->id);
-//        $this->recruteurService->createProfileRecruteur($data['user']);
-//        return response()->json([
-//            "success" => true,
-//            "message" => "Inscription d'un recruteur avec success",
-//            "data" => UserResource::collection($data["user"]),
-//            "token" => $data["token"]
-//        ]);
+        $role = Role::where('role', RoleUser::recruteur)->first();
+        $data = $this->authService->register($request, $role->id);
+        $profileRecruteur = $this->recruteurService->createProfileRecruteur($data['user']);
+        return response()->json([
+            "success" => true,
+            "message" => "Inscription d'un recruteur avec success",
+            "data" => new ProfileRecruteurResource($profileRecruteur),
+            "token" => $data["token"]
+        ]);
     }
 
     public function login(LoginRequest $request)

@@ -8,7 +8,7 @@ class ProfileRecruteur extends Model
 {
     protected $fillable = [
         'user_id', 'imageURL', 'ville',
-        'telephone', 'poste'
+        'telephone', 'poste', 'entreprise_id'
     ];
 
     public function user()

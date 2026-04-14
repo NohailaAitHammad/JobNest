@@ -132,7 +132,7 @@ class TestUserSeeder extends Seeder
 
 
             // Créer ProfileRecruteur
-            ProfileRecruteur::firstOrCreate(
+            $profileRecruteur = ProfileRecruteur::firstOrCreate(
                 ['user_id' => $recruteur->id],
                 [
                     'ville' => 'Rabat',
@@ -143,7 +143,7 @@ class TestUserSeeder extends Seeder
 
             // Créer Entreprise
             $entreprise = Entreprise::firstOrCreate(
-                ['user_id' => $recruteur->id],
+                ['profile_recruteur_id' => $profileRecruteur->id],
                 [
                     'nom' => 'TechMaroc Solutions',
                     'ville' => 'Rabat',

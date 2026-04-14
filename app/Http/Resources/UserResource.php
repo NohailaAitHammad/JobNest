@@ -20,7 +20,7 @@ class UserResource extends JsonResource
             "lastName" => $this->resource->lastName,
             "email" => $this->resource->email,
             "password" => $this->resource->password,
-            "role" =>  new RoleResource($this->whenLoaded('role'))
+            "role" =>  new RoleResource($this->role)
         ];
     }
 }

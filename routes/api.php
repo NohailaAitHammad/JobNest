@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CandidatController;
 use App\Http\Controllers\API\CertificatController;
 use App\Http\Controllers\API\CompetenceController;
+use App\Http\Controllers\API\RecruteurController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,16 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get("/candidats/{profileCandidat}", [CandidatController::class, "show"]);
     Route::put("/candidats/{profileCandidat}", [CandidatController::class, "update"]);
+    Route::patch("/candidats/profile/visibility", [CandidatController::class, "toggleVisibility"]);
+    Route::post("/candidats/profile/cv", [CandidatController::class, "uploadCV"]);
+    Route::post("/candidats/delete", [CandidatController::class, "destroy"]);
+});
 
-    /*competences */
+Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
+    Route::get("/recruteurs/{profileRecruteur}", [RecruteurController::class, "show"]);
+    Route::put("/recruteurs/{profileRecruteur}", [RecruteurController::class, "update"]);
+    Route::post("/recruteurs/delete", [RecruteurController::class, "destroy"]);
+
 });
 
 Route::apiResource('certifications', CertificatController::class);
