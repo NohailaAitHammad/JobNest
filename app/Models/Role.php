@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -12,7 +13,7 @@ class Role extends Model
 
     protected $fillable = ['role'];
 
-
+    protected $casts = ["role" => RoleUser::class];
     public function users() : HasMany
     {
         return $this->hasMany(User::class);

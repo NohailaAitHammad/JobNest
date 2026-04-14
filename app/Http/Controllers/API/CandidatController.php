@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileCandidatRequest;
+use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CandidatService;
 use App\Models\Candidat;
 use App\Models\ProfileCandidat;
@@ -50,7 +51,8 @@ class CandidatController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Profile Candidat",
-            "data" => $profileCandidat
+            "data" => new ProfileCandidatResource($profileCandidat)
+
         ]);
     }
 
@@ -63,7 +65,7 @@ class CandidatController extends Controller
         return response()->json([
             "success" => true,
             "message" => "¨Profile Candidat Modifier avec success",
-            "data" => $profileCandidat
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 

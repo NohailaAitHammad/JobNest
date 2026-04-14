@@ -6,9 +6,12 @@ use App\Enums\StatusUser;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Resources\ProfileCandidatResource;
+use App\Http\Resources\UserResource;
 use App\Http\Services\AuthService;
 use App\Http\Services\CandidatService;
 use App\Http\Services\RecruteurService;
+use App\Models\ProfileCandidat;
 use App\Models\Role;
 use App\enums\RoleUser;
 use Illuminate\Http\Request;
@@ -31,25 +34,25 @@ class AuthController extends Controller
     {
         $role = Role::where('role', RoleUser::candidat)->first();
         $data = $this->authService->register($request, $role->id);
-        $dd = $this->candidatService->createProfileCandidat($data['user']);
+        $candidatProfile = $this->candidatService->createProfileCandidat($data['user']);
         return response()->json([
             "success" => true,
             "message" => "Inscription d'un candidat avec success",
-            "data" => $dd,
+            "data" => new ProfileCandidatResource($candidatProfile),
             "token" => $data["token"]
         ]);
     }
     public function registerRrecruter(RegisterRequest $request)
     {
-        $role = Role::where('role', RoleUser::recruteur)->first();
-        $data = $this->authService->register($request, $role->id);
-        $this->recruteurService->createProfileRecruteur($data['user']);
-        return response()->json([
-            "success" => true,
-            "message" => "Inscription d'un recruteur avec success",
-            "data" => $data["user"],
-            "token" => $data["token"]
-        ]);
+//        $role = Role::where('role', RoleUser::recruteur)->first();
+//        $data = $this->authService->register($request, $role->id);
+//        $this->recruteurService->createProfileRecruteur($data['user']);
+//        return response()->json([
+//            "success" => true,
+//            "message" => "Inscription d'un recruteur avec success",
+//            "data" => UserResource::collection($data["user"]),
+//            "token" => $data["token"]
+//        ]);
     }
 
     public function login(LoginRequest $request)

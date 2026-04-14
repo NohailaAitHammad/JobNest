@@ -5,6 +5,7 @@ namespace App\Http\Services;
 use App\Enums\RoleUser;
 use App\Enums\StatusUser;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Candidat;
 use App\Models\Role;
 use App\Models\User;
@@ -26,6 +27,7 @@ class AuthService
             'status' => StatusUser::active,
             ]);
         $token = $user->createToken('my_app_token')->plainTextToken;
+        //$user->load('role');
         return [
             "user" => $user,
             "token" => $token

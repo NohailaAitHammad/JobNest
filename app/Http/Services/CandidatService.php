@@ -16,12 +16,13 @@ class CandidatService
 
     public function createProfileCandidat(User $user)
     {
-        return ProfileCandidat::create(['user_id' => $user->id])->load("user");
+        return ProfileCandidat::create(['user_id' => $user->id]);
     }
 
     public function updateProfile(ProfileCandidatRequest $request, ProfileCandidat $profileCandidat)
     {
         $validated = $request->validated();
+        $validated["est_visible"] = true;
         $profileCandidat->update($validated);
         return $profileCandidat->load("user");
     }
