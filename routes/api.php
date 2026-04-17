@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CandidatController;
 use App\Http\Controllers\API\CertificatController;
 use App\Http\Controllers\API\CompetenceController;
+use App\Http\Controllers\API\ExperienceController;
 use App\Http\Controllers\API\RecruteurController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -18,8 +19,9 @@ Route::post("/register/signUpCondidat", [AuthController::class, "registerCondida
 Route::post("/register/signUpRecruter", [AuthController::class, "registerRrecruter"]);
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
-Route::middleware(['auth:sanctum', 'is.candidat'])->group(function () {
+Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
     Route::get("/candidats/{profileCandidat}", [CandidatController::class, "show"]);
     Route::put("/candidats/{profileCandidat}", [CandidatController::class, "update"]);
     Route::patch("/candidats/profile/visibility", [CandidatController::class, "toggleVisibility"]);
@@ -27,6 +29,24 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(function () {
     Route::delete("/candidats/profile/{profileCandidat}/delete", [CandidatController::class, "destroy"]);
     Route::post("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, 'addCompetence']);
     Route::post("/candidats/profile/{profileCandidat}/competences/{competence}", [CompetenceController::class, 'removeCompetence']);
+
+    Route::get("/candidats/profile/{profileCandidat}/experiences", [ExperienceController::class, "index"]);
+    Route::post("/candidats/profile/{profileCandidat}/experiences", [ExperienceController::class, "store"]);
+    Route::put("/candidats/profile/{profileCandidat}/experiences/{experience}", [ExperienceController::class, "update"]);
+    Route::delete("/candidats/profile/{profileCandidat}/experiences/{experience}", [ExperienceController::class, "destroy"]);
+
+    Route::get("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, "index"]);
+    Route::post("/admins/{user}/competences", [CompetenceController::class, "store"]);
+    Route::put("/admins/{user}/competences/{competence}", [CompetenceController::class, "update"]);
+    Route::delete("/admins/{user}/competences/{competence}", [CompetenceController::class, "destroy"]);
+    Route::post("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, "addCompetence"]);
+    Route::post("/candidats/profile/{profileCandidat}/competences/{competence}", [CompetenceController::class, "removeCompetence"]);
+
+    Route::get("/candidats/profile/{profileCandidat}/certifications", [CertificatController::class, "index"]);
+    Route::post("/candidats/profile/{profileCandidat}/certifications", [CertificatController::class, "store"]);
+    Route::put("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "update"]);
+    Route::delete("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "destroy"]);
+
 });
 
 Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {

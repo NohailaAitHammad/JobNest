@@ -12,8 +12,6 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CertificationService
 {
-
-
     public function getAllCertification()
     {
         return Experience::all();
