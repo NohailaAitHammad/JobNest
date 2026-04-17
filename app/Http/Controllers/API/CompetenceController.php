@@ -8,6 +8,8 @@ use App\Http\Requests\CompetenceRequest;
 use App\Http\Services\CompetenceService;
 use App\Models\Experience;
 use App\Models\Competence;
+use App\Models\ProfileCandidat;
+use Illuminate\Http\Request;
 
 
 class CompetenceController extends Controller
@@ -38,6 +40,7 @@ class CompetenceController extends Controller
      */
     public function store(CompetenceRequest $request)
     {
+        $this->authorize("create", Competence::class);
         $competence = $this->competenceService->addCompetence($request);
         return response()->json([
             "success" => true,
@@ -46,10 +49,25 @@ class CompetenceController extends Controller
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     * @throws \Exception
-     */
+    public function addCompetence(Request $request, ProfileCandidat $profileCandidat)
+    {
+        $this->competenceService->add($request, $profileCandidat);
+        return response()->json([
+            "success" => true,
+            "message" => "Competence ajouter"
+        ]);
+
+    }
+
+    public function removeCompetence(ProfileCandidat $profileCandidat, Competence $competence)
+    {
+        $this->competenceService->removeCompetence($profileCandidat, $competence);
+        return response()->json([
+            "success" => true,
+            "message" => "Competence remover"
+        ]);
+    }
+
     public function show(Competence $competence)
     {
         //$competence = $this->competenceService->showCompetence($competence);
@@ -75,11 +93,10 @@ class CompetenceController extends Controller
 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy(Competence $competence)
     {
+        $this->authorize("delete", Competence::class);
         if(!$this->competenceService->deleteCompetence($competence)){
             return response()->json([
                 "success" => false,

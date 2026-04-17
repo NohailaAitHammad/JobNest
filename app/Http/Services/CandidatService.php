@@ -39,10 +39,16 @@ class CandidatService
         return $profileCandidat->est_visible;
     }
 
-    public function uploadCV(User $user, UploadedFile $file)
+    public function uploadCV(Request $request, ProfileCandidat $profileCandidat)
     {
-        $path = $file->store('cvs', 'public');
-        ProfileCandidat::where('user_id', $user->id)->update(['cv_url' => $path]);
+        $request->validate([
+            "cv_url" => "required|file|mimes:pdf|max:2048"
+        ]);
+        $file = $request->file('cv_url');
+        if($file !== null && !$file->getError()){
+            $path = $file->store('cvs', 'public');
+        }
+        $profileCandidat->update(['cv_url' => $path]);
         return $path;
     }
     public function addExperience()

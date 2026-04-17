@@ -4,6 +4,8 @@ namespace App\Http\Services;
 
 use App\Http\Requests\CompetenceRequest;
 use App\Models\Competence;
+use App\Models\ProfileCandidat;
+use Illuminate\Http\Request;
 
 class CompetenceService
 {
@@ -55,5 +57,20 @@ class CompetenceService
 
         return $competence->delete();
 
+    }
+
+
+    public function add(Request $request, ProfileCandidat $profileCandidat)
+    {
+        $validated = $request->validate([
+            "competences" => "array",
+            "competences.*" => "exists:competences,id"
+        ]);
+        $profileCandidat->competences()->sync([$request->competences]);
+    }
+
+    public function removeCompetence( ProfileCandidat $profileCandidat, Competence $competence )
+    {
+        $profileCandidat->competences()->detach($competence->id);
     }
 }

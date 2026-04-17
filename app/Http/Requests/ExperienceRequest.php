@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileCandidatRequest extends FormRequest
+class ExperienceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,12 +23,11 @@ class ProfileCandidatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "imageURL" => ["sometimes","required", "image", "max:255"],
-            "ville" => ["sometimes", "required", "string", "max:255"],
-            "telephone" => ["sometimes", "required", "string", "max:255"],
-            "cv_url" => ["sometimes", "required", "string", "max:255"],
-            "portfolio_url" => ["sometimes", "required", "string", "max:255"],
-            "est_visible" => ["sometimes", "required"]
+            "poste" => ['sometimes', 'required', 'string', 'max:255'],
+            "entreprise" => ['sometimes', 'required', 'string', 'max:255'],
+            "description" => ['sometimes', 'required', 'string', 'max:255'],
+            "dateDebut" => ['sometimes','required', 'date'],
+            "dateFin" => ['sometimes', 'required', 'date', 'after:dateDebut']
         ];
     }
 }

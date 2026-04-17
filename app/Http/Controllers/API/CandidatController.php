@@ -79,12 +79,9 @@ class CandidatController extends Controller
         ]);
     }
 
-    public function uploadCV(Request $request)
+    public function uploadCV(Request $request, ProfileCandidat $profileCandidat)
     {
-        $request->validate([
-            "cv_url" => "required|file|mimes:pdf|max:2048"
-        ]);
-        $path = $this->candidatService->uploadCV(auth()->user(), $request->file('cv_url'));
+        $path = $this->candidatService->uploadCV($request, $profileCandidat);
         return response()->json([
             "success" => true,
             "message" => "CV importer avec success",
