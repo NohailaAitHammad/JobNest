@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificationRequest;
 use App\Http\Services\CertificationService;
 use App\Models\Experience;
+use App\Models\ProfileCandidat;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CertificatController extends Controller
@@ -19,6 +21,7 @@ class CertificatController extends Controller
     {
         $this->certificationService = $certificationService;
     }
+
 
 
     /**

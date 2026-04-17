@@ -9,10 +9,6 @@ use App\Models\User;
 
 class ExperienceService
 {
-    public function getProfileCandidat(User $user)
-    {
-      return ProfileCandidat::where("user_id", $user->id)->firstOrFail();
-    }
 
     public function listExperiences(ProfileCandidat $profileCandidat)
     {
