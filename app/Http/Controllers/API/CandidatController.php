@@ -74,18 +74,36 @@ class CandidatController extends Controller
         $visible = $this->candidatService->toggleVisibility($user);
         return response()->json([
             "success" => true,
-            "message" => $visible ?  "Visibilité du Profile Candidat est active":"Visibilité du Profile Candidat est inactive",
-
+            "message" => $visible ?  "Visibilité du Profile Candidat est active":"Visibilité du Profile Candidat est inactive"
         ]);
     }
 
-    public function uploadCV(Request $request, ProfileCandidat $profileCandidat)
+        public function uploadCV(ProfileCandidatRequest $request, ProfileCandidat $profileCandidat)
     {
         $path = $this->candidatService->uploadCV($request, $profileCandidat);
         return response()->json([
             "success" => true,
             "message" => "CV importer avec success",
-            "path" => $path
+            "data" => new ProfileCandidatResource($profileCandidat)
+            //"data" => $path
+        ]);
+    }
+    public function uploadPortfolio(Request $request, ProfileCandidat $profileCandidat)
+    {
+        $path = $this->candidatService->uploadPortfolio($request, $profileCandidat);
+        return response()->json([
+            "success" => true,
+            "message" => "Portfolio importer avec success",
+            "data" => new ProfileCandidatResource($profileCandidat)
+        ]);
+    }
+    public function uploadImage(Request $request, ProfileCandidat $profileCandidat)
+    {
+       $p= $this->candidatService->uploadImage($request, $profileCandidat);
+        return response()->json([
+            "success" => true,
+            "message" => "Image importer avec success",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
 
     }

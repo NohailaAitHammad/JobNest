@@ -59,10 +59,17 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $data = $this->authService->login($request);
+//        if($data['user']->role->role === RoleUser::candidat){
+//            $profile = new UserResource($data['user']);
+//        }else if($data['user']->role->role === RoleUser::recruteur){
+//            $profile = new ProfileRecruteurResource($data['user']);
+//        }else{
+//            $profile = new UserResource($data['user']);
+//        }
         return response()->json([
             "success" => true,
             "message" => "Connexion avec success",
-            "data" => $data["user"],
+            "data" => new UserResource($data['user']),
             "token" => $data["token"]
         ]);
     }

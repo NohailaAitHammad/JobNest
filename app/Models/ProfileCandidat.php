@@ -12,7 +12,8 @@ class ProfileCandidat extends Model
     protected $fillable = ['id',
         'user_id', 'imageURL', 'ville',
         'telephone', 'cv_url',
-        'portfolio_url', 'est_visible'
+        'portfolio_url', 'est_visible',
+        'image_url'
     ];
 
     protected $casts = [

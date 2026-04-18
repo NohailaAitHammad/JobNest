@@ -22,10 +22,12 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () {
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::get("/candidats/{profileCandidat}", [CandidatController::class, "show"]);
-    Route::put("/candidats/{profileCandidat}", [CandidatController::class, "update"]);
+    Route::get("/candidats/profile/{profileCandidat}", [CandidatController::class, "show"]);
+    Route::put("/candidats/profile/{profileCandidat}", [CandidatController::class, "update"]);
     Route::patch("/candidats/profile/visibility", [CandidatController::class, "toggleVisibility"]);
     Route::post("/candidats/profile/{profileCandidat}/cv", [CandidatController::class, "uploadCV"]);
+    Route::post("/candidats/profile/{profileCandidat}/portfolio", [CandidatController::class, "uploadPortfolio"]);
+    Route::post("/candidats/profile/{profileCandidat}/image", [CandidatController::class, "uploadImage"]);
     Route::delete("/candidats/profile/{profileCandidat}/delete", [CandidatController::class, "destroy"]);
     Route::post("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, 'addCompetence']);
     Route::post("/candidats/profile/{profileCandidat}/competences/{competence}", [CompetenceController::class, 'removeCompetence']);

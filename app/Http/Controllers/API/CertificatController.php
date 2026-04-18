@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificationRequest;
+use App\Http\Resources\CertificationResource;
 use App\Http\Services\CertificationService;
 use App\Models\Experience;
 use App\Models\ProfileCandidat;
@@ -33,7 +34,7 @@ class CertificatController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Liste des certifications",
-            "data" => $certifications
+            "data" => CertificationResource::collection($certifications)
         ]);
     }
 
