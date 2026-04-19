@@ -6,6 +6,7 @@ use App\Http\Requests\CompetenceRequest;
 use App\Models\Competence;
 use App\Models\ProfileCandidat;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CompetenceService
 {
@@ -54,9 +55,7 @@ class CompetenceService
         }catch (\Exception $exception){
             throw $exception;
         }
-
         return $competence->delete();
-
     }
 
 
@@ -72,6 +71,11 @@ class CompetenceService
 
     public function removeCompetence( ProfileCandidat $profileCandidat, Competence $competence )
     {
+        try {
+            $profileCandidat->competences()->findOrFail($competence->id);
+        }catch (NotFoundHttpException $exception){
+            throw new  $exception;
+        }
         $profileCandidat->competences()->detach($competence->id);
         return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }

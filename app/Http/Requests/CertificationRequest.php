@@ -22,8 +22,10 @@ class CertificationRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            "certificat" => ["required", "string", "max:255"]
-        ];
+        return array(
+            "titre" => ["sometimes","required", "string", "max:255"],
+            "organisme" =>  ["sometimes","required", "string", "max:255"],
+            "dateObtention" => ["sometimes","required", "date", "before_or_equal:today"]
+        );
     }
 }

@@ -35,7 +35,8 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () 
     Route::get("/candidats/profile/{profileCandidat}/experiences", [ExperienceController::class, "index"]);
     Route::post("/candidats/profile/{profileCandidat}/experiences", [ExperienceController::class, "store"]);
     Route::put("/candidats/profile/{profileCandidat}/experiences/{experience}", [ExperienceController::class, "update"]);
-    Route::delete("/candidats/profile/{profileCandidat}/experiences/{experience}", [ExperienceController::class, "destroy"]);
+    Route::delete("/candidats/profile/{profileCandidat}/experiences/{experience}/delete", [ExperienceController::class, "destroy"]);
+    Route::get("/candidats/profile/{profileCandidat}/experiences/{experience}", [ExperienceController::class, "show"]);
 
     Route::get("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, "index"]);
     Route::post("/admins/{user}/competences", [CompetenceController::class, "store"]);

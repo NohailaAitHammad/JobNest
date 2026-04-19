@@ -5,11 +5,14 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificationRequest;
 use App\Http\Resources\CertificationResource;
+use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CertificationService;
+use App\Models\Certification;
 use App\Models\Experience;
 use App\Models\ProfileCandidat;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CertificatController extends Controller
 {
@@ -41,9 +44,9 @@ class CertificatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CertificationRequest $request)
+    public function store(CertificationRequest $request, ProfileCandidat $profileCandidat)
     {
-        $certification = $this->certificationService->addCertification($request);
+        $certification = $this->certificationService->addCertification($request, $profileCandidat);
         return response()->json([
             "success" => true,
             "message" => "Experience ajouter avec success",
@@ -69,13 +72,13 @@ class CertificatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CertificationRequest $request, Experience $certification)
+    public function update(CertificationRequest $request,ProfileCandidat $profileCandidat, Certification $certification)
     {
-        $resultCertification = $this->certificationService->updateCertification($request, $certification);
+       $this->certificationService->updateCertification($request, $certification, $profileCandidat);
         return response()->json([
             "success" => true,
             "message" => "Experience modifier avec success",
-            "data" => $resultCertification
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
 
     }
@@ -83,9 +86,9 @@ class CertificatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Experience $certification)
+    public function destroy(ProfileCandidat $profileCandidat, Certification $certification)
     {
-        if(!$this->certificationService->deleteCertification($certification)){
+        if(!$this->certificationService->deleteCertification($certification, $profileCandidat)){
             return response()->json([
                 "success" => false,
                 "message" => "Error lors de la suppression de la certification"
@@ -94,7 +97,8 @@ class CertificatController extends Controller
 
         return response()->json([
             "success" => true,
-            "message" => "Experience supprimer avec success"
+            "message" => "Experience supprimer avec success",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 }

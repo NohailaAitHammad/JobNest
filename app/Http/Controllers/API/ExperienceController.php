@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ExperienceRequest;
 use App\Http\Resources\ExperienceResource;
+use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\ExperienceService;
 use App\Models\Experience;
 use App\Models\ProfileCandidat;
@@ -30,7 +31,7 @@ class ExperienceController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Liste des experiences",
-            "data" => $experiences
+            "data" =>  ExperienceResource::collection($experiences)
         ]);
     }
 
@@ -39,49 +40,50 @@ class ExperienceController extends Controller
      */
     public function store(ExperienceRequest $request, ProfileCandidat $profileCandidat)
     {
-        $experience = $this->experienceService->createExperience($request,auth()->user() );
+       $this->experienceService->createExperience($request,$profileCandidat );
         return response()->json([
             "success" => true,
-            "message" => "Experience",
-            "data" => $experience
+            "message" => "Experience ajouter avec success",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ], 201);
     }
 
     /*
      * Display the specified resource.
      */
-    public function show(Experience $experience, ProfileCandidat $profileCandidat)
+    public function show( ProfileCandidat $profileCandidat, Experience $experience)
     {
-        $experience = $this->experienceService->showExperience($experience, $profileCandidat );
+        $this->experienceService->showExperience($experience, $profileCandidat );
         return response()->json([
             "success" => true,
             "message" => "Detail d'une experience",
-            "data" => $experience
+            "data" => new ExperienceResource($experience)
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(ExperienceRequest $request, Experience $experience)
+    public function update(ExperienceRequest $request, ProfileCandidat $profileCandidat, Experience $experience)
     {
-        $experience = $this->experienceService->updateExperience($request, $experience, auth()->user());
+        $this->experienceService->updateExperience($request, $experience,$profileCandidat);
         return response()->json([
             "success" => true,
             "message" => "Experience modifier avec success",
-            "data" => $experience
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Experience $experience)
+    public function destroy(ProfileCandidat $profileCandidat, Experience $experience)
     {
-        $this->experienceService->deleteExpereince(auth()->user(),$experience);
+        $this->experienceService->deleteExpereince($profileCandidat,$experience);
         return response()->json([
             "success" => true,
-            "message" => "Experience supprimer avec success"
+            "message" => "Experience supprimer avec success",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 }

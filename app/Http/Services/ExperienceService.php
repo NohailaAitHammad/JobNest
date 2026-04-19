@@ -6,6 +6,7 @@ use App\Http\Requests\ExperienceRequest;
 use App\Models\Experience;
 use App\Models\ProfileCandidat;
 use App\Models\User;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ExperienceService
 {
@@ -17,27 +18,43 @@ class ExperienceService
 
     public function showExperience(Experience $experience, ProfileCandidat $profileCandidat)
     {
-        return $profileCandidat->experiences()->findOrFail($experience->id);
+        try {
+            $profileCandidat->experiences()->findOrFail($experience->id);
+        }catch(NotFoundHttpException $exception){
+            throw new $exception;
+        }
+
+        return $experience;
     }
 
-    public function createExperience(ExperienceRequest $request,User $user)
+    public function createExperience(ExperienceRequest $request,ProfileCandidat $profileCandidat)
     {
         $validated  = $request->validated();
-        return $this->getProfileCandidat($user)->experiences()->create($validated);
+         $profileCandidat->experiences()->create($validated);
+         return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
-    public function updateExperience(ExperienceRequest $request, Experience $experience, User $user)
+    public function updateExperience(ExperienceRequest $request, Experience $experience, ProfileCandidat $profileCandidat)
     {
         $validated  = $request->validated();
-        $experience = $this->getProfileCandidat($user)->experiencesr()->findOrFail($experience->id);
+        try {
+            $experience =$profileCandidat->experiences()->findOrFail($experience->id);
+        }catch (NotFoundHttpException $exception){
+            throw new $exception;
+        }
         $experience->update($validated);
-        return $experience->fresh();
+        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
-    public function deleteExpereince(User $user, Experience $experience)
+    public function deleteExpereince(ProfileCandidat $profileCandidat, Experience $experience)
     {
-        $profileCandidat = $this->getProfileCandidat($user);
-        $profileCandidat->experiences()->findOrFail($experience->id)->delete();
+        try {
+            $profileCandidat->experiences()->findOrFail($experience->id);
+
+        }catch(NotFoundHttpException $exception){
+            throw new $exception;
+        }
+        $experience->delete();
     }
 }
 

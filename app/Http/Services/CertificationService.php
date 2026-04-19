@@ -17,13 +17,12 @@ class CertificationService
         return Experience::all();
     }
 
-    public function addCertification(CertificationRequest $request)
+    public function addCertification(CertificationRequest $request, ProfileCandidat $profileCandidat)
     {
         $validated  = $request->validated();
+        $profileCandidat->certifications()->create($validated);
 
-        $certification = Experience::create($validated);
-
-        return $certification;
+        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
     public function showCertification(Certification $certification, ProfileCandidat $profileCandidat)
@@ -36,7 +35,7 @@ class CertificationService
         return $certification;
     }
 
-    public function updateCertification(CertificationRequest $request, Experience $certification, ProfileCandidat $profileCandidat)
+        public function updateCertification(CertificationRequest $request, Certification $certification, ProfileCandidat $profileCandidat)
     {
         try {
             $certification = $profileCandidat->certifications()->findOrFail($certification->id);
@@ -44,18 +43,18 @@ class CertificationService
             throw $exception;
         }
          $validated = $request->validated();
-         $certification->certificat = $validated['certificat'];
-         $certification->save();
-         return $certification;
+         $certification->update($validated);
+         return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
-    public function deleteCertification(Experience $certification, ProfileCandidat $profileCandidat)
+    public function deleteCertification(Certification $certification, ProfileCandidat $profileCandidat)
     {
         try {
-            $certification = $profileCandidat->experiences()->findOrFail($certification->id);
+            $certification = $profileCandidat->certifications()->findOrFail($certification->id);
         }catch (\Exception $exception){
             throw $exception;
         }
-        return $certification->delete();
+         $certification->delete();
+        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 }

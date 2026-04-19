@@ -15,8 +15,8 @@ class CertificationResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'profile_candidat_id' => $this->profile_candidat_id,
-            "profile_candidat" => new ProfileCandidatResource($this->profileCandidat),
+//            'profile_candidat_id' => $this->profile_candidat_id,
+//            "profile_candidat" => new ProfileCandidatResource($this->profileCandidat),
             'titre' => $this->title,
             'organisme' => $this->organisme,
             'dateObtention' => $this->dateObtention
