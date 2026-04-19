@@ -22,7 +22,7 @@ class DashboardService
                 ->where('status', 'pending')->count(),
             'accepted_propositions' => Proposition::where('candidat_id', $profileCandidat->user_id)
                 ->where('status', 'accepted')->count(),
-            'is_visible'            => $profileCandidat?->status === StatusUser::active,
+            'is_visible'            => $profileCandidat?->est_visible,
         ];
     }
 

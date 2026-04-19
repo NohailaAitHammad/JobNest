@@ -42,8 +42,5 @@ class ProfileCandidat extends Model
         return $this->hasMany(Certification::class);
     }
 
-    public function newEloquentBuilder($query)
-    {
-        return new  CandidatQueryBuilder($query);
-    }
+
 }
