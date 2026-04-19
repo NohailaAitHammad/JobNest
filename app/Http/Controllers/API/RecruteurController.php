@@ -4,23 +4,28 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterCandidatsRequest;
+use App\Http\Requests\PropositionRequest;
 use App\Http\Requests\RecruteurRequest;
 use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Resources\ProfileRecruteurResource;
+use App\Http\Resources\PropositionResource;
+use App\Http\Services\PropositionService;
 use App\Http\Services\RecruteurService;
 use App\Models\ProfileRecruteur;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RecruteurController extends Controller
 {
     private RecruteurService $recruteurService;
-
+    private PropositionService $propositionService;
     /**
      * @param RecruteurService $recruteurService
      */
-    public function __construct(RecruteurService $recruteurService)
+    public function __construct(RecruteurService $recruteurService, PropositionService $propositionService)
     {
         $this->recruteurService = $recruteurService;
+        $this->propositionService = $propositionService;
     }
 
     /**
@@ -88,7 +93,28 @@ class RecruteurController extends Controller
                 "message" => "Liste des candidats filtres",
                 "data" => ProfileCandidatResource::collection($candidats)
         ]);
+    }
 
+    public function sendPropositions(PropositionRequest $request, User $user)
+    {
+        $proposition = $this->propositionService->sendPropositions($request,auth()->user(), $user );
+        return response()->json([
+            "success" => true,
+            "message" => "Proposition est bien envoyer",
+            "data" => new PropositionResource($proposition)
+        ]);
+    }
 
+    public function getAllPropositionSendedByRecruteur()
+    {
+        if (!auth()->user()->profileRecruteur) {
+            abort(403, "Not a recruteur");
+        }
+        $propositions = $this->propositionService->getAllPropositionSendedByRecruteur(auth()->user());
+        return response()->json([
+            "success" => true,
+            "message" => "Liste des propositions envoyer",
+            "data" => PropositionResource::collection($propositions)
+        ]);
     }
 }

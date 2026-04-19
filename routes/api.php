@@ -57,15 +57,19 @@ Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
     Route::get("/recruteurs/{profileRecruteur}", [RecruteurController::class, "show"]);
     Route::put("/recruteurs/{profileRecruteur}", [RecruteurController::class, "update"]);
     Route::delete("/recruteurs/profile/{profileRecruteur}/delete", [RecruteurController::class, "destroy"]);
-    Route::get("/admins/domaines", [DomaineController::class, "index"]);
-    Route::post("/admins/domaines", [DomaineController::class, "store"]);
-    Route::put("/admins/domaines/{domaine}", [DomaineController::class, "update"]);
-    Route::delete("/admins/domaines/{domaine}/delete", [DomaineController::class, "destroy"]);
     Route::get("/search", [RecruteurController::class, "searchCandidats"]);
+
+    Route::post("/recruteurs/propositions/{user}", [RecruteurController::class, "sendPropositions"]);
+    Route::get("/recruteurs/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"]);
 });
 
 Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){
     Route::post('/competences', [CompetenceController::class, "store"]);
     Route::put('/competences/{competence}', [CompetenceController::class, "store"]);
     Route::delete('/competences/{competence}', [CompetenceController::class, "destroy"]);
+    Route::get("/admins/domaines", [DomaineController::class, "index"]);
+    Route::post("/admins/domaines", [DomaineController::class, "store"]);
+    Route::put("/admins/domaines/{domaine}", [DomaineController::class, "update"]);
+    Route::delete("/admins/domaines/{domaine}/delete", [DomaineController::class, "destroy"]);
+
 });

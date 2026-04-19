@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileCandidatRequest;
+use App\Http\Requests\PropositionRequest;
 use App\Http\Resources\ProfileCandidatResource;
+use App\Http\Resources\PropositionResource;
 use App\Http\Services\CandidatService;
+use App\Http\Services\PropositionService;
 use App\Models\ProfileCandidat;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,13 +16,15 @@ use Illuminate\Http\Request;
 class CandidatController extends Controller
 {
     private CandidatService $candidatService;
+    private PropositionService $propositionService;
 
     /**
      * @param CandidatService $candidatService
      */
-    public function __construct(CandidatService $candidatService)
+    public function __construct(CandidatService $candidatService, PropositionService $propositionService)
     {
         $this->candidatService = $candidatService;
+        $this->propositionService = $propositionService;
     }
 
     /**
@@ -118,6 +123,25 @@ class CandidatController extends Controller
             "message" => "Profile Candidat Supprimer avec success",
             "data" => $request->user()
         ]);
+
+    }
+
+    public function getAllPropositionReceivedByCandidat()
+    {
+        $propositions = $this->propositionService->getAllPropositionReceivedByCandidat(auth()->user());
+        return response()->json([
+            'success' => true,
+            "message" => "Liste des propositions envoyer",
+            "data" =>  PropositionResource::collection($propositions)
+        ]);
+    }
+
+    public function accepterProposition(PropositionRequest $propositionRequest)
+    {
+
+    }
+    public function refuserProposition(PropositionRequest $propositionRequest)
+    {
 
     }
 }
