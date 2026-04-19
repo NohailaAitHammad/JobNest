@@ -7,7 +7,7 @@ use App\Http\Requests\RecruteurRequest;
 use App\Http\Resources\ProfileRecruteurResource;
 use App\Http\Services\RecruteurService;
 use App\Models\ProfileRecruteur;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 
 class RecruteurController extends Controller
 {
@@ -55,11 +55,10 @@ class RecruteurController extends Controller
      */
     public function update(RecruteurRequest $request, ProfileRecruteur $profileRecruteur)
     {
-
         $this->recruteurService->updateProfile($request, $profileRecruteur);
         return response()->json([
             "success" => true,
-            "message" => "¨Profile Candidat Modifier avec success",
+            "message" => "Profile Candidat Modifier avec success",
             "data" => new ProfileRecruteurResource($profileRecruteur)
         ]);
     }
@@ -72,7 +71,8 @@ class RecruteurController extends Controller
         $this->recruteurService->deleteProfileRecruteur($request, $profileRecruteur);
         return response()->json([
             "success" => true,
-            "message" => "Profile Recruteur Supprimer avec success"
+            "message" => "Profile Recruteur Supprimer avec success",
+            "data" => new ProfileRecruteurResource($profileRecruteur)
         ]);
     }
 }

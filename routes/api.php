@@ -55,7 +55,7 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () 
 Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
     Route::get("/recruteurs/{profileRecruteur}", [RecruteurController::class, "show"]);
     Route::put("/recruteurs/{profileRecruteur}", [RecruteurController::class, "update"]);
-    Route::post("/recruteurs/profile/{profileRecruteur}/delete", [RecruteurController::class, "destroy"]);
+    Route::delete("/recruteurs/profile/{profileRecruteur}/delete", [RecruteurController::class, "destroy"]);
 });
 
 Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){

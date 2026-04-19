@@ -10,7 +10,12 @@ class ProfileRecruteur extends Model
     use SoftDeletes;
     protected $fillable = ['id',
         'user_id', 'imageURL', 'ville',
-        'telephone', 'poste', 'entreprise_id'
+        'telephone', 'poste',
+        'dateCreation',
+        'nom',
+        'nombreEmployees',
+        'description',
+        'profile_recruteur_id'
     ];
 
     public function user()

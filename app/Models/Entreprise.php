@@ -10,9 +10,9 @@ class Entreprise extends Model
     use SoftDeletes;
 
     protected $fillable = ['id',
-        'profile_recruteur_id', 'nom', 'ville',
+        'nom', 'ville',
         'dateCreation', 'nombreEmployees',
-        'description'
+        'description', 'profile_recruteur_id'
     ];
 
     public function recruteur()

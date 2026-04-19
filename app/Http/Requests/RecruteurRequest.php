@@ -26,7 +26,14 @@ class RecruteurRequest extends FormRequest
             'imageURL' => ['sometimes', 'required', 'string', 'max:255'],
             'ville' => ['sometimes', 'required', 'string', 'max:255'],
             'telephone' => ['sometimes', 'required', 'string', 'max:255'],
-            'poste' => ['sometimes', 'required', 'string', 'max:255']
+            'poste' => ['sometimes', 'required', 'string', 'max:255'],
+            //'entreprise' => ['sometimes', 'required', 'string', 'max:255'],
+            'nom' => ["sometimes", 'required', "string", "max:255"],
+            "dateCreation" => ['sometimes', 'required', 'date'],
+            "nombreEmployees" => ['sometimes', 'required', 'int', 'min:0'],
+            "description" => ["sometimes", "required", "string", "max:255"],
+            "domaine" => ["sometimes", "required", "array"],
+            "domaine.*" => ["exists:domaines,id"]
         ];
     }
 }

@@ -10,7 +10,7 @@ use App\Http\Services\CompetenceService;
 use App\Models\Experience;
 use App\Models\Competence;
 use App\Models\ProfileCandidat;
-use Illuminate\Http\Request;
+c
 
 
 class CompetenceController extends Controller

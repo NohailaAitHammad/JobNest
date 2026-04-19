@@ -16,14 +16,13 @@ class EntrepriseResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            'user_id' => $this->user_id,
-            'user' => new UserResource($this->user),
             'nom' => $this->nom,
             'ville' => $this->ville,
             'dateCreation' => $this->dateCreation,
             'nombreEmployees' => $this->nombreEmployees,
             'description' => $this->description,
-            'domaine' =>  DomaineResource::collection($this->whenLoaded("domaines"))
+            //'domaine' =>  DomaineResource::collection($this->whenLoaded("domaines"))
+            'domaine' => DomaineResource::collection($this->domaines)
         ];
     }
 }
