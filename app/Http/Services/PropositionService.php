@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\StatusProp;
 use App\Http\Requests\PropositionRequest;
 use App\Models\ProfileCandidat;
 use App\Models\Proposition;
@@ -13,20 +14,20 @@ class PropositionService
 
     public function getAllPropositionSendedByRecruteur(User $user)
     {
-//        return Proposition::where("recruteur_id ", $user->id)
-//            ->with('candidat')
+//        return Proposition::where("recruteur_id", $user->id)
+//            ->with(['candidat', 'recruteur'])
 //            ->latest()
 //            ->get();
-
         return $user->propositionsEnvoyees;
     }
 
     public function getAllPropositionReceivedByCandidat(User $user)
     {
-        return Proposition::where("candidat_id  ", $user->id)
-            ->with('recruteur')
-            ->latest()
-            ->get();
+//        return Proposition::where("candidat_id", $user->id)
+//            ->with('recruteur')
+//            ->latest()
+//            ->get();
+        return $user->propositionsRecues;
     }
 
     public function sendPropositions(PropositionRequest $request,User $recruteur, User $candidat)
@@ -61,6 +62,42 @@ class PropositionService
         $proposition = Proposition::create($validated);
          $proposition->load(['candidat', 'recruteur']);
          return $proposition;
+    }
+
+    public function accepte(Proposition $proposition)
+    {
+        if($proposition->status === StatusProp::accepter){
+            throw new \Exception("Proposition deja accepter");
+
+        }
+
+        if($proposition->status === StatusProp::refuser){
+            throw new \Exception("Proposition deja refuser");
+
+        }
+        if ($proposition->candidat->id !== auth()->id()){
+            throw new \Exception("Candidat invalide de cette proposition");
+        }
+
+        $proposition->update(['status'=> StatusProp::accepter]);
+        return $proposition;
+    }
+
+    public function refuser(Proposition $proposition)
+    {
+        if($proposition->status === StatusProp::accepter){
+            throw new \Exception("Proposition deja accepter");
+        }
+
+        if($proposition->status === StatusProp::refuser){
+            throw new \Exception("Proposition deja refuser");
+        }
+        if ($proposition->candidat->id !== auth()->id()){
+            throw new \Exception("Candidat invalide de cette proposition");
+        }
+
+        $proposition->update(['status'=> StatusProp::refuser]);
+        return $proposition;
     }
 
 }

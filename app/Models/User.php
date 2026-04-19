@@ -95,7 +95,7 @@ class User extends Authenticatable
 
     public function isCandidat(): bool
     {
-        return $this->hasRole('condidat');
+        return $this->hasRole('candidat');
     }
 
     public function isRecruteur(): bool

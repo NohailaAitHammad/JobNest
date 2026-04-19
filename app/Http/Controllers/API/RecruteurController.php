@@ -107,9 +107,7 @@ class RecruteurController extends Controller
 
     public function getAllPropositionSendedByRecruteur()
     {
-        if (!auth()->user()->profileRecruteur) {
-            abort(403, "Not a recruteur");
-        }
+        $user = auth()->user();
         $propositions = $this->propositionService->getAllPropositionSendedByRecruteur(auth()->user());
         return response()->json([
             "success" => true,

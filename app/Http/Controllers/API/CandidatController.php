@@ -10,6 +10,7 @@ use App\Http\Resources\PropositionResource;
 use App\Http\Services\CandidatService;
 use App\Http\Services\PropositionService;
 use App\Models\ProfileCandidat;
+use App\Models\Proposition;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -136,12 +137,23 @@ class CandidatController extends Controller
         ]);
     }
 
-    public function accepterProposition(PropositionRequest $propositionRequest)
-    {
 
+    public function accepterProposition(PropositionRequest $propositionRequest,Proposition $proposition)
+    {
+        $this->propositionService->accepte($proposition);
+        return response()->json([
+            "success" => true,
+            "message" => "Proposition est bien accepter",
+            "data" => new PropositionResource($proposition)
+        ]);
     }
-    public function refuserProposition(PropositionRequest $propositionRequest)
+    public function refuserProposition(Proposition $proposition)
     {
-
+        $this->propositionService->refuser($proposition);
+        return response()->json([
+            "success" => true,
+            "message" => "Proposition est bien refuser",
+            "data" => new PropositionResource($proposition)
+        ]);
     }
 }

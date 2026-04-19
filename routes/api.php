@@ -50,6 +50,9 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () 
     Route::post("/candidats/profile/{profileCandidat}/certifications", [CertificatController::class, "store"]);
     Route::put("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "update"]);
     Route::delete("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "destroy"]);
+    Route::get("/candidats/propositions", [CandidatController::class, "getAllPropositionReceivedByCandidat"]);
+    Route::post("/candidats/propositions/{proposition}/accepter", [CandidatController::class, "accepterProposition"]);
+    Route::post("/candidats/propositions/{proposition}/refuser", [CandidatController::class, "refuserProposition"]);
 
 });
 
@@ -60,7 +63,7 @@ Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
     Route::get("/search", [RecruteurController::class, "searchCandidats"]);
 
     Route::post("/recruteurs/propositions/{user}", [RecruteurController::class, "sendPropositions"]);
-    Route::get("/recruteurs/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"]);
+    Route::get("/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"]);
 });
 
 Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){
