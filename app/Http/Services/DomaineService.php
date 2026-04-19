@@ -11,7 +11,7 @@ class DomaineService
 
     public function getAllDomaines()
     {
-        return Domaine::all()->latest()->paginate();
+        return Domaine::all();
     }
 
     public function addDomaine(DomaineRequest $request)

@@ -23,7 +23,7 @@ class DomaineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nom" => ["required", "string", "unique:domaines.nom", "max:255"]
+            "nomDomaine" => ["required", "string", "max:255", "unique:domaines,nomDomaine"],
         ];
     }
 }
