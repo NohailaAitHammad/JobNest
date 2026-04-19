@@ -30,6 +30,9 @@ class FilterCandidatsRequest extends FormRequest
             "competences" => ["sometimes", "array"],
             "competences.*" => ["exists:competences,id"],
 
+//            "certifications" => ["sometimes", "array"],
+//            "certifications.*" => ["exists:certifications,id"],
+
             "niveau" => ["sometimes", "string", "max:255"],
         ];
     }

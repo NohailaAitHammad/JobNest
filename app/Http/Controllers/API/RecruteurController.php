@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FilterCandidatsRequest;
 use App\Http\Requests\RecruteurRequest;
+use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Resources\ProfileRecruteurResource;
 use App\Http\Services\RecruteurService;
 use App\Models\ProfileRecruteur;
@@ -85,7 +86,7 @@ class RecruteurController extends Controller
         return response()->json([
                 "success" => true,
                 "message" => "Liste des candidats filtres",
-                "data" => $candidats
+                "data" => ProfileCandidatResource::collection($candidats)
         ]);
 
 

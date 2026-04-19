@@ -105,6 +105,12 @@ class RecruteurService
             });
         }
 
+//        if(!empty($filters['certifications']) && is_array($filters['certifications'])){
+//            $query->whereHas('certifications', function ($q) use($filters){
+//                $q->whereIn('certifications.id', $filters['certifications']);
+//            });
+//        }
+
         if(!empty($filters['niveau'])){
             $query->whereHas('competences', function ($q) use($filters){
                 $q->where('niveau', $filters['niveau']);
@@ -117,6 +123,8 @@ class RecruteurService
 //                $q->where("titre", "like", "%{$keywords}%");
 //            });
 //        }
-        return $query->paginate(5);
+        return $query
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
     }
 }
