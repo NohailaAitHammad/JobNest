@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FilterCandidatsRequest;
 use App\Http\Requests\RecruteurRequest;
 use App\Http\Resources\ProfileRecruteurResource;
 use App\Http\Services\RecruteurService;
@@ -74,5 +75,19 @@ class RecruteurController extends Controller
             "message" => "Profile Recruteur Supprimer avec success",
             "data" => new ProfileRecruteurResource($profileRecruteur)
         ]);
+    }
+
+
+    public function searchCandidats(FilterCandidatsRequest $request)
+    {
+        $validated = $request->validated();
+         $candidats = $this->recruteurService->searchCandidats($validated);
+        return response()->json([
+                "success" => true,
+                "message" => "Liste des candidats filtres",
+                "data" => $candidats
+        ]);
+
+
     }
 }

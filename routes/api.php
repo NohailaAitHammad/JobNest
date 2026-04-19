@@ -61,6 +61,7 @@ Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
     Route::post("/admins/domaines", [DomaineController::class, "store"]);
     Route::put("/admins/domaines/{domaine}", [DomaineController::class, "update"]);
     Route::delete("/admins/domaines/{domaine}/delete", [DomaineController::class, "destroy"]);
+    Route::get("/search", [RecruteurController::class, "searchCandidats"]);
 });
 
 Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){

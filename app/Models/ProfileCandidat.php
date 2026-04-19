@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\QueryBuilder\candidats\CandidatQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -39,5 +40,10 @@ class ProfileCandidat extends Model
     public function certifications()
     {
         return $this->hasMany(Certification::class);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new  CandidatQueryBuilder($query);
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Services;
 
+use App\Enums\StatusUser;
+use App\Http\Requests\FilterCandidatsRequest;
 use App\Http\Requests\RecruteurRequest;
+use App\Models\ProfileCandidat;
 use App\Models\ProfileRecruteur;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -78,5 +81,42 @@ class RecruteurService
         return $request->user()->delete();
         //$profileRecruteur->delete();
         //return $request->user()->currentAccessToken()->delete();
+    }
+
+    public function searchCandidats(array $filters)
+    {
+        $query =  ProfileCandidat::query()
+            ->where('profile_candidats.est_visible', true)
+            ->with(["user", "competences", "certifications", "experiences"]);
+
+        if(!empty($filters["ville"])){
+                $query->where('ville', $filters['ville']);
+        }
+
+        if(!empty($filters["status"])){
+            $query->whereHas('user', function($q) use($filters){
+                $q->where('status', $filters['status']);
+            });
+        }
+
+        if(!empty($filters['competences']) && is_array($filters['competences'])){
+            $query->whereHas('competences', function ($q) use($filters){
+                $q->whereIn('competences.id', $filters['competences']);
+            });
+        }
+
+        if(!empty($filters['niveau'])){
+            $query->whereHas('competences', function ($q) use($filters){
+                $q->where('niveau', $filters['niveau']);
+            });
+        }
+
+//        if(!empty($filters['keywords'])){
+//            $keywords = $filters['keywords'];
+//            $query->where(function ($q) use($keywords){
+//                $q->where("titre", "like", "%{$keywords}%");
+//            });
+//        }
+        return $query->paginate(5);
     }
 }
