@@ -9,6 +9,7 @@ use App\Http\Requests\RecruteurRequest;
 use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Resources\ProfileRecruteurResource;
 use App\Http\Resources\PropositionResource;
+use App\Http\Services\DashboardService;
 use App\Http\Services\PropositionService;
 use App\Http\Services\RecruteurService;
 use App\Models\ProfileRecruteur;
@@ -19,13 +20,13 @@ class RecruteurController extends Controller
 {
     private RecruteurService $recruteurService;
     private PropositionService $propositionService;
-    /**
-     * @param RecruteurService $recruteurService
-     */
-    public function __construct(RecruteurService $recruteurService, PropositionService $propositionService)
+    private DashboardService $dashboardService;
+
+    public function __construct(RecruteurService $recruteurService, PropositionService $propositionService, DashboardService $dashboardService)
     {
         $this->recruteurService = $recruteurService;
         $this->propositionService = $propositionService;
+        $this->dashboardService = $dashboardService;
     }
 
     /**
@@ -113,6 +114,16 @@ class RecruteurController extends Controller
             "success" => true,
             "message" => "Liste des propositions envoyer",
             "data" => PropositionResource::collection($propositions)
+        ]);
+    }
+
+    public function dashboard(ProfileRecruteur $profileRecruteur)
+    {
+        $stats = $this->dashboardService->recruiterDashboard($profileRecruteur);
+        return response()->json([
+            "success" => true,
+            "message" => "Statistique du recruteur",
+            "data" => $stats
         ]);
     }
 }

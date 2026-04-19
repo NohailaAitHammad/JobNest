@@ -53,6 +53,7 @@ Route::middleware(['auth:sanctum', 'is.candidat'])->group(callback: function () 
     Route::get("/candidats/propositions", [CandidatController::class, "getAllPropositionReceivedByCandidat"]);
     Route::post("/candidats/propositions/{proposition}/accepter", [CandidatController::class, "accepterProposition"]);
     Route::post("/candidats/propositions/{proposition}/refuser", [CandidatController::class, "refuserProposition"]);
+    Route::get("/candidate/{profileCandidat}/dashboard", [CandidatController::class, ""]);
 
 });
 
@@ -64,6 +65,8 @@ Route::middleware(['auth:sanctum', 'is.recruteur'])->group(function () {
 
     Route::post("/recruteurs/propositions/{user}", [RecruteurController::class, "sendPropositions"]);
     Route::get("/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"]);
+    Route::get("/recruteurs/{profileRecruteur}/dashboard", [RecruteurController::class, ""]);
+
 });
 
 Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){
@@ -74,5 +77,6 @@ Route::middleware(['auth:sanctum', 'is.admin'])->group(function (){
     Route::post("/admins/domaines", [DomaineController::class, "store"]);
     Route::put("/admins/domaines/{domaine}", [DomaineController::class, "update"]);
     Route::delete("/admins/domaines/{domaine}/delete", [DomaineController::class, "destroy"]);
+
 
 });

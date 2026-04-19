@@ -8,6 +8,7 @@ use App\Http\Requests\PropositionRequest;
 use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Resources\PropositionResource;
 use App\Http\Services\CandidatService;
+use App\Http\Services\DashboardService;
 use App\Http\Services\PropositionService;
 use App\Models\ProfileCandidat;
 use App\Models\Proposition;
@@ -18,14 +19,16 @@ class CandidatController extends Controller
 {
     private CandidatService $candidatService;
     private PropositionService $propositionService;
+    private DashboardService $dashboardService;
 
     /**
      * @param CandidatService $candidatService
      */
-    public function __construct(CandidatService $candidatService, PropositionService $propositionService)
+    public function __construct(CandidatService $candidatService, PropositionService $propositionService, DashboardService $dashboardService)
     {
         $this->candidatService = $candidatService;
         $this->propositionService = $propositionService;
+        $this->dashboardService = $dashboardService;
     }
 
     /**
@@ -36,7 +39,7 @@ class CandidatController extends Controller
         return response()->json([
             "success" => true,
             "message" => "Liste des profiles candidats",
-            "data" => Candidat::with('user')->get()
+            "data" => ProfileCandidat::with('user')->get()
         ]);
     }
 
@@ -154,6 +157,16 @@ class CandidatController extends Controller
             "success" => true,
             "message" => "Proposition est bien refuser",
             "data" => new PropositionResource($proposition)
+        ]);
+    }
+
+    public function dashboard(ProfileCandidat $profileCandidat)
+    {
+        $stats = $this->dashboardService->candidateDashboard($profileCandidat);
+        return response()->json([
+            "success" => true,
+            "message" => "Statistique du candidt",
+            "data" => $stats
         ]);
     }
 }
