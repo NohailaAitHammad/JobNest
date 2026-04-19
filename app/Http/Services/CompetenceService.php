@@ -66,11 +66,13 @@ class CompetenceService
             "competences" => "array",
             "competences.*" => "exists:competences,id"
         ]);
-        $profileCandidat->competences()->sync([$request->competences]);
+        $profileCandidat->competences()->sync($request->competences);
+        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
     public function removeCompetence( ProfileCandidat $profileCandidat, Competence $competence )
     {
         $profileCandidat->competences()->detach($competence->id);
+        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 }

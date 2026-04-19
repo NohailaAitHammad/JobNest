@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificationRequest;
 use App\Http\Requests\CompetenceRequest;
+use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CompetenceService;
 use App\Models\Experience;
 use App\Models\Competence;
@@ -51,10 +52,11 @@ class CompetenceController extends Controller
 
     public function addCompetence(Request $request, ProfileCandidat $profileCandidat)
     {
-        $this->competenceService->add($request, $profileCandidat);
+        $profileCandidat = $this->competenceService->add($request, $profileCandidat);
         return response()->json([
             "success" => true,
-            "message" => "Competence ajouter"
+            "message" => "Competence ajouter",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
 
     }
@@ -64,7 +66,8 @@ class CompetenceController extends Controller
         $this->competenceService->removeCompetence($profileCandidat, $competence);
         return response()->json([
             "success" => true,
-            "message" => "Competence remover"
+            "message" => "Competence remover",
+            "data" => new ProfileCandidatResource($profileCandidat)
         ]);
     }
 
