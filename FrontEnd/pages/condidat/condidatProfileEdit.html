@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Onboarding Profile Setup - JobNest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<!-- Logo décoratif en haut à droite -->
+<div class="absolute top-0 right-0 -mr-20 -mt-20">
+    <div class="w-64 h-64 rounded-full bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center opacity-90">
+        <span class="text-white text-8xl font-bold">J</span>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-12 min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-2xl">
+        <h1 class="text-4xl font-bold text-gray-900 text-center mb-8">Onboarding Profile Setup</h1>
+
+        <!-- Profile Picture Upload -->
+        <div class="flex justify-center mb-8">
+            <div class="relative">
+                <div id="profilePicturePreview" class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-purple-200 transition">
+                    <svg class="w-12 h-12 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </div>
+                <input type="file" id="profilePictureInput" accept="image/*" class="hidden">
+                <label for="profilePictureInput" class="absolute bottom-0 right-0 w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-purple-700 transition">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </label>
+            </div>
+        </div>
+        <p class="text-center text-sm text-gray-600 mb-8">Profile Picture Upload</p>
+
+        <!-- Onboarding Form -->
+        <form id="onboardingForm" class="bg-white rounded-lg shadow-sm p-8 space-y-6">
+            <!-- Headline / Job Title -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Headline / Job Title
+                </label>
+                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none bg-white">
+                    <option>e.g., "UI/UX Designer"</option>
+                    <option>Frontend Developer</option>
+                    <option>Backend Developer</option>
+                    <option>Full Stack Developer</option>
+                    <option>Product Manager</option>
+                    <option>Data Scientist</option>
+                </select>
+            </div>
+
+            <!-- Location -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Location
+                </label>
+                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none bg-white">
+                    <option>Current Location</option>
+                    <option>Paris, France</option>
+                    <option>Lyon, France</option>
+                    <option>Marseille, France</option>
+                    <option>Bordeaux, France</option>
+                </select>
+            </div>
+
+            <!-- Phone -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Phone
+                </label>
+                <input
+                        type="tel"
+                        placeholder="Phone"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                >
+            </div>
+
+            <!-- Upload Resume -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Upload Resume
+                </label>
+                <div class="relative">
+                    <input
+                            type="text"
+                            id="resumeFileName"
+                            placeholder="Upload Resume"
+                            readonly
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white cursor-pointer"
+                    >
+                    <input type="file" id="resumeInput" accept=".pdf,.doc,.docx" class="hidden">
+                    <label for="resumeInput" class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-600 cursor-pointer">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Upload Certificat -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Upload Certificat
+                </label>
+                <div class="relative">
+                    <input
+                            type="text"
+                            id="certificatFileName"
+                            placeholder="Upload Certificat"
+                            readonly
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white cursor-pointer"
+                    >
+                    <input type="file" id="certificatInput" accept=".pdf,.jpg,.jpeg,.png" class="hidden">
+                    <label for="certificatInput" class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-600 cursor-pointer">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Skills Tags -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Skills Tags
+                </label>
+                <div class="relative">
+                    <input
+                            type="text"
+                            id="skillsInput"
+                            placeholder="Skills Tags"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                    <button type="button" onclick="addSkill()" class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="skillsTags" class="mt-2 flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Portfolio Links -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Portfolio Links
+                </label>
+                <div class="relative">
+                    <input
+                            type="url"
+                            id="portfolioInput"
+                            placeholder="Portfolio Links"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                    <button type="button" onclick="addPortfolio()" class="absolute right-3 top-1/2 -translate-y-1/2 text-purple-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div id="portfolioLinks" class="mt-2 space-y-2"></div>
+            </div>
+
+            <!-- Short Bio / Summary -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">
+                    Short Bio / Summary
+                </label>
+                <textarea
+                        placeholder="Summary"
+                        rows="4"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 resize-none"
+                ></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex gap-4 pt-4">
+                <button
+                        type="submit"
+                        class="flex-1 bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 rounded-lg transition"
+                >
+                    Signup
+                </button>
+                <button
+                        type="button"
+                        onclick="skipOnboarding()"
+                        class="flex-1 bg-white border-2 border-purple-600 text-purple-600 hover:bg-purple-50 font-semibold py-3 rounded-lg transition"
+                >
+                    Skip
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Profile picture upload preview
+    document.getElementById('profilePictureInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('profilePicturePreview');
+                preview.innerHTML = `<img src="${e.target.result}" alt="Photo de profil" class="w-full h-full object-cover rounded-full">`;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Resume upload
+    document.getElementById('resumeInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('resumeFileName').value = file.name;
+        }
+    });
+
+    // Certificate upload
+    document.getElementById('certificatInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            document.getElementById('certificatFileName').value = file.name;
+        }
+    });
+
+    // Add skill tag
+    function addSkill() {
+        const input = document.getElementById('skillsInput');
+        const skill = input.value.trim();
+
+        if (skill) {
+            const tagsContainer = document.getElementById('skillsTags');
+            const tag = document.createElement('span');
+            tag.className = 'inline-flex items-center gap-1 bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm';
+            tag.innerHTML = `
+                    ${skill}
+                    <button type="button" onclick="this.parentElement.remove()" class="hover:text-purple-900">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+            tagsContainer.appendChild(tag);
+            input.value = '';
+        }
+    }
+
+    // Add portfolio link
+    function addPortfolio() {
+        const input = document.getElementById('portfolioInput');
+        const link = input.value.trim();
+
+        if (link) {
+            const linksContainer = document.getElementById('portfolioLinks');
+            const linkElement = document.createElement('div');
+            linkElement.className = 'flex items-center gap-2 bg-gray-50 p-2 rounded-lg';
+            linkElement.innerHTML = `
+                    <a href="${link}" target="_blank" class="flex-1 text-purple-600 hover:underline text-sm truncate">${link}</a>
+                    <button type="button" onclick="this.parentElement.remove()" class="text-gray-400 hover:text-red-600">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+            linksContainer.appendChild(linkElement);
+            input.value = '';
+        }
+    }
+
+    // Form submission
+    document.getElementById('onboardingForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        alert('Profil créé avec succès! Bienvenue sur JobNest.');
+        window.location.href = 'candidate-profile.html';
+    });
+
+    // Skip onboarding
+    function skipOnboarding() {
+        if (confirm('Voulez-vous vraiment passer cette étape? Vous pourrez compléter votre profil plus tard.')) {
+            window.location.href = 'candidate-profile.html';
+        }
+    }
+
+    // Allow Enter key to add skills and portfolio
+    document.getElementById('skillsInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addSkill();
+        }
+    });
+
+    document.getElementById('portfolioInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            addPortfolio();
+        }
+    });
+</script>
+</body>
+</html>

@@ -14,11 +14,12 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = ['admin', 'recruter', 'condidat'];
+        $roles = ['admin', 'recruteur', 'candidat'];
         foreach ($roles as $role) {
-            DB::table('roles')->insert(
-                ['role' => $role]
-            );
+//            DB::table('roles')->insert(
+//                ['role' => $role]
+//            );
+            Role::firstOrCreate(['role'=> $role]);
         }
 
     }

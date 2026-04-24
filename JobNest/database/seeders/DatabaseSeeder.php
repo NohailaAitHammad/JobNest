@@ -19,7 +19,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             RoleSeeder::class,
-                ]
-        );
+            DomaineSeeder::class,
+            CompetenceSeeder::class,
+            TestUserSeeder::class,
+        ]);
     }
 }

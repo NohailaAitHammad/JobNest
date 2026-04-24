@@ -16,17 +16,12 @@ return new class extends Migration
             $table->string('firstName');
             $table->string('lastName');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('ville')->nullable();
-            $table->string('imageURL')->nullable();
-            $table->string('telephone')->nullable();
-            $table->enum('status', ['active', 'banni'])->default('active');
-            $table->boolean('is_visible')->default(false);
-            $table->boolean('is_banned')->default(false);
+            $table->enum('status', ['active','banni'])
+                ->default('active');
             $table->timestamp('banned_at')->nullable();
-            $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine('innoDB');
         });
 
