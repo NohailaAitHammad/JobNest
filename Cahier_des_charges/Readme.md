@@ -1,7 +1,1 @@
-user stories
-
-
-
-
-
-qdcs
+ ### lien du cahier de charge : https://docs.google.com/document/d/18OAL4jGnlVg-HXo6kuVByZlz7xMyH9XGF3234CbUzo4/edit?tab=t.0#heading=h.8ts3ts4wwha5
