@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/app" isTestSource="false" packagePrefix="App\" />
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/database/factories" isTestSource="false" packagePrefix="Database\Factories\" />
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/database/seeders" isTestSource="false" packagePrefix="Database\Seeders\" />
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/tests" isTestSource="true" packagePrefix="Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/tests/Feature" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/JobNest/tests/Unit" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/carbonphp/carbon-doctrine-types" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/dflydev/dot-access-data" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/doctrine/inflector" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/doctrine/lexer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/dragonmantank/cron-expression" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/fakerphp/faker" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/fruitcake/php-cors" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/graham-campbell/result-type" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/hamcrest/hamcrest-php" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/pail" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/pint" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/prompts" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/sail" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/serializable-closure" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/tinker" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/commonmark" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/config" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/flysystem-local" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/uri" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/league/uri-interfaces" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/mockery/mockery" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/myclabs/deep-copy" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nesbot/carbon" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nette/schema" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nette/utils" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nikic/php-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nunomaduro/collision" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/nunomaduro/termwind" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phar-io/manifest" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phar-io/version" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpoption/phpoption" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/php-code-coverage" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/php-file-iterator" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/php-invoker" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/php-text-template" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/php-timer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/phpunit/phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/container" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/psy/psysh" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/ramsey/collection" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/ramsey/uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/cli-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/code-unit" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/code-unit-reverse-lookup" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/comparator" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/complexity" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/diff" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/environment" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/exporter" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/global-state" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/lines-of-code" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/object-enumerator" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/object-reflector" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/recursion-context" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/type" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/sebastian/version" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/staabm/side-effects-detector" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/console" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/css-selector" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/error-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/event-dispatcher" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/event-dispatcher-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/finder" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/http-foundation" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-ctype" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-intl-grapheme" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-intl-normalizer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-mbstring" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-php80" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-php83" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-php84" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-php85" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/process" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/routing" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/service-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/string" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/translation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/var-dumper" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/theseer/tokenizer" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/vlucas/phpdotenv" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/voku/portable-ascii" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/storage/app" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/storage/framework" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/laravel/sanctum" />
+      <excludeFolder url="file://$MODULE_DIR$/JobNest/vendor/_laravel_idea" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
