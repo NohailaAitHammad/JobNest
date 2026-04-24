@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Profile - JobNest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+<!-- Header Navigation -->
+<header class="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <div class="container mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-8">
+                <div class="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white text-2xl font-bold">J</span>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex gap-6">
+                    <a href="#" class="text-gray-700 hover:text-purple-600 font-medium">Dashboard</a>
+                    <a href="#" class="text-gray-700 hover:text-purple-600 font-medium">My Propositions</a>
+                    <a href="#" class="text-gray-700 hover:text-purple-600 font-medium">Companies</a>
+                </nav>
+            </div>
+
+            <!-- Search and Actions -->
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <input
+                            type="text"
+                            placeholder="Search"
+                            class="pl-10 pr-4 py-2 border border-gray-200 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    >
+                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </button>
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                    </svg>
+                </button>
+                <img src="https://i.pravatar.cc/150?img=33" alt="Photo de profil de Lilian" class="w-10 h-10 rounded-full border-2 border-purple-600">
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="container mx-auto px-6 py-8 max-w-4xl">
+    <!-- Profile Header -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-start gap-4">
+            <div class="relative">
+                <img src="https://i.pravatar.cc/150?img=33" alt="Photo de profil de Lilian - Designer UX/UI" class="w-20 h-20 rounded-full">
+                <span class="absolute bottom-0 right-0 w-5 h-5 bg-purple-600 rounded-full border-2 border-white flex items-center justify-center">
+                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                        </svg>
+                    </span>
+            </div>
+            <div class="flex-1">
+                <h1 class="text-2xl font-bold text-gray-900">Lilian</h1>
+                <p class="text-sm text-gray-600 flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Addis Ababa
+                </p>
+            </div>
+            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Job Title & Bio -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-start justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                UX/UI Designer | Fronted Developer
+                <span class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                        </svg>
+                    </span>
+            </h2>
+        </div>
+        <p class="text-gray-700 mb-4">
+            Hi there! I'm Lilian, a dedicated UX/UI designer and frontend developer with a sharp focus on creating smooth user experiences and transforming designs into reality.
+        </p>
+        <button class="text-purple-600 hover:text-purple-700 font-semibold flex items-center gap-1">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+            </svg>
+        </button>
+
+        <div class="mt-6">
+            <h3 class="font-semibold text-gray-900 mb-3">Skills:</h3>
+            <ul class="space-y-2 text-gray-700">
+                <li class="flex items-start gap-2">
+                    <span class="text-purple-600">•</span>
+                    UI/UX Design
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-purple-600">•</span>
+                    HTML5, CSS3, JavaScript
+                </li>
+                <li class="flex items-start gap-2">
+                    <span class="text-purple-600">•</span>
+                    Responsive Web Design
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Work Experiences -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900">Work Experiences</h2>
+            <div class="flex gap-2">
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                    </svg>
+                </button>
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <p class="text-gray-600">No experience</p>
+    </div>
+
+    <!-- Portfolio -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900">Portfolio</h2>
+            <div class="flex gap-2">
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                    </svg>
+                </button>
+                <button class="p-2 hover:bg-gray-100 rounded-lg">
+                    <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="space-y-3">
+            <div class="border border-gray-200 rounded-lg p-4 hover:border-purple-300 transition">
+                <div class="w-full h-32 bg-gray-200 rounded mb-2"></div>
+                <a href="#" class="text-purple-600 hover:underline text-sm">Portfolio Website</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                Skills
+                <span class="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
+                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+                        </svg>
+                    </span>
+            </h2>
+        </div>
+        <div class="flex flex-wrap gap-2">
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">Figma</span>
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">User Research</span>
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">Wireframing</span>
+            <span class="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm">Prototyping</span>
+        </div>
+    </div>
+
+    <!-- Experience -->
+    <div class="bg-white rounded-lg shadow-sm p-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900">Certification</h2>
+            <button class="p-2 hover:bg-gray-100 rounded-lg">
+                <svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="grid grid-cols-3 gap-4">
+            <div class="border border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 transition">
+                <div class="w-full h-32 bg-gray-200 rounded mb-2"></div>
+                <h3 class="font-semibold text-sm text-gray-900 mb-1">Google UX Design Specialization</h3>
+                <button class="text-purple-600 hover:text-purple-700">
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 transition">
+                <div class="w-full h-32 bg-gray-200 rounded mb-2"></div>
+                <h3 class="font-semibold text-sm text-gray-900 mb-1">Google UX Design Specialization</h3>
+                <button class="text-purple-600 hover:text-purple-700">
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+            <div class="border border-gray-200 rounded-lg p-4 text-center hover:border-purple-300 transition">
+                <div class="w-full h-32 bg-gray-200 rounded mb-2"></div>
+                <h3 class="font-semibold text-sm text-gray-900 mb-1">Google UX Design Specialization</h3>
+                <button class="text-purple-600 hover:text-purple-700">
+                    <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-purple-700 text-white mt-20">
+    <div class="container mx-auto px-6 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+            <!-- Logo -->
+            <div>
+                <div class="w-16 h-16 bg-white rounded-lg flex items-center justify-center mb-4">
+                    <span class="text-purple-700 text-3xl font-bold">J</span>
+                </div>
+                <p class="text-sm text-purple-200">Copyright © 2025 J</p>
+                <p class="text-sm text-purple-200">All rights reserved</p>
+            </div>
+
+            <!-- Company -->
+            <div>
+                <h3 class="font-semibold mb-4">Company</h3>
+                <ul class="space-y-2 text-sm text-purple-200">
+                    <li><a href="#" class="hover:text-white">About us</a></li>
+                    <li><a href="#" class="hover:text-white">Services</a></li>
+                    <li><a href="#" class="hover:text-white">Pricing</a></li>
+                    <li><a href="#" class="hover:text-white">Contact us</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div>
+                <h3 class="font-semibold mb-4">Support</h3>
+                <ul class="space-y-2 text-sm text-purple-200">
+                    <li><a href="#" class="hover:text-white">Help center</a></li>
+                    <li><a href="#" class="hover:text-white">Terms of service</a></li>
+                    <li><a href="#" class="hover:text-white">Legal</a></li>
+                    <li><a href="#" class="hover:text-white">Privacy policy</a></li>
+                    <li><a href="#" class="hover:text-white">Status</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal -->
+            <div>
+                <h3 class="font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-sm text-purple-200">
+                    <li><a href="#" class="hover:text-white">Terms of Service</a></li>
+                    <li><a href="#" class="hover:text-white">Cookie Policy</a></li>
+                </ul>
+                <div class="flex gap-4 mt-4">
+                    <a href="#" class="hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="hover:text-white">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Simple interactions
+    console.log('Profile de Lilian chargé avec succès');
+</script>
+</body>
+</html>
