@@ -3,5 +3,6 @@
 </script>
 
 <template>
-    <router-view />
+  <h1 >sigUpRecruteur page</h1>
 </template>
+

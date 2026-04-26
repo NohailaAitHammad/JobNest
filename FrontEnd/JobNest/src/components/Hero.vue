@@ -20,8 +20,8 @@ defineProps({
       <h1 class="text-5xl font-bold leading-tight mb-6">{{ title }}</h1>
       <p class="text-gray-600 text-lg mb-8 leading-relaxed">{{ subTitle}}</p>
       <div class="flex gap-4">
-        <a href="signup-employer.html" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Hire Talent</a>
-        <a href="signup-talent.html" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Find a Job</a>
+        <router-link to="/candidats/signUpCandidat" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Candidat</router-link>
+        <router-link to="/recruteurs/sigUpRecruteur" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Recruteur</router-link>
       </div>
     </div>
     <div class="relative">

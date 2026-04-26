@@ -15,6 +15,7 @@ use App\Http\Services\RecruteurService;
 use App\Models\ProfileCandidat;
 use App\Models\Role;
 use App\enums\RoleUser;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -59,6 +60,13 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $data = $this->authService->login($request);
+
+        if($data === false){
+            return response()->json([
+               'success' => false,
+                'message' => "The provided credentials are not correct"
+            ], 422);
+        }
 //        if($data['user']->role->role === RoleUser::candidat){
 //            $profile = new UserResource($data['user']);
 //        }else if($data['user']->role->role === RoleUser::recruteur){

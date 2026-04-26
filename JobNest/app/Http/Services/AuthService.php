@@ -61,10 +61,7 @@ class AuthService
                 ];
             }
         }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Identifiants incorrects',
-            ], 401);
+            return false;
 
         }
     }

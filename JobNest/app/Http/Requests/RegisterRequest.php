@@ -28,4 +28,13 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'min:6', 'confirmed'],
         ];
     }
+    public function messages()
+    {
+        return [
+            'firstName' => 'First Name is required',
+            'lastName' => 'Last Name is required',
+            'email.unique' => "L'adresse email est déjà utilisée.",
+            'password:min' => "Le mot de passe doit contenir au moins 8 caractères."
+        ];
+    }
 }

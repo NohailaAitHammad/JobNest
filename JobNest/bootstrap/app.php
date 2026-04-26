@@ -1,8 +1,11 @@
 <?php
 
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,5 +22,25 @@ return Application::configure(basePath: dirname(__DIR__))
                 ]
         );
     })
-    ->withExceptions(function (Exceptions $exceptions): void {
+    ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function (AuthenticationException $e, $request){
+            return response()->json([
+                'success' => false,
+                'message' => 'Non authentifié.',
+            ], 401);
+        });
+
+        $exceptions->render(function (ModelNotFoundException $e, $request){
+            return response()->json([
+                'success' => false,
+                'message' => 'Ressource introuvable',
+            ], 404);
+        });
+        $exceptions->render(function (ValidationException $e, $request){
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de validation',
+                'errors' => $e->errors(),
+            ], 422);
+        });
     })->create();

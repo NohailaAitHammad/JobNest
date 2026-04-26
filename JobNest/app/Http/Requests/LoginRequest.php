@@ -22,8 +22,16 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+            'email' => ['required', 'email', 'exists:users'],
+            'password' => ['required', "min:8"],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'email.exists' => "L'adresse email est introuvable.",
+            'password:min' => "Le mot de passe doit contenir au moins 8 caractères."
         ];
     }
 }
