@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+/* Gradients */
+.hero-gradient {
+    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #581C87 100%);
+}
+
+.purple-gradient {
+    background: linear-gradient(135deg, #581c87 0%, #7c3aed 100%);
+}
+
+/* Glass Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Status Badges */
+.status-active {
+    background-color: #DCFCE7;
+    color: #16A34A;
+}
+
+.status-paused {
+    background-color: #FFEDD5;
+    color: #EA580C;
+}
+
+.status-draft {
+    background-color: #DBEAFE;
+    color: #2563EB;
+}
+
+.status-closed {
+    background-color: #FEE2E2;
+    color: #DC2626;
+}
+
+.status-pending {
+    color: #2563EB;
+}
+
+.status-accepted {
+    color: #16A34A;
+}
+
+.status-rejected {
+    color: #DC2626;
+}
+
+.status-new {
+    background-color: #DBEAFE;
+    color: #2563EB;
+}
+
+.status-shortlisted {
+    background-color: #DCFCE7;
+    color: #16A34A;
+}
+
+.status-interviewed {
+    background-color: #F3E8FF;
+    color: #9333EA;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #7c3aed;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #6d28d9;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Card Hover Effects */
+.card-hover {
+    transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px -8px rgba(124, 58, 237, 0.15);
+}
+
+/* Purple Background Pattern */
+.bg-purple-pattern {
+    background-color: #7c3aed;
+    background-image:
+            radial-gradient(at 80% 0%, hsla(253,16%,7%,1) 0px, transparent 50%),
+            radial-gradient(at 0% 50%, hsla(341,100%,60%,0.3) 0px, transparent 50%),
+            radial-gradient(at 80% 50%, hsla(269,100%,50%,0.3) 0px, transparent 50%);
+}
+
+/* Form Focus States */
+.form-input:focus {
+    outline: none;
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1);
+}
+
+/* Table Styles */
+.table-row-hover:hover {
+    background-color: #F3E8FF;
+}
+
+/* Page Header Background */
+.page-header-bg {
+    background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.page-header-bg::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50%;
+    filter: blur(40px);
+}
+
+/* Toggle Switch Custom */
+.toggle-checkbox:checked {
+    right: 0;
+    border-color: #7c3aed;
+}
+
+.toggle-checkbox:checked + .toggle-label {
+    background-color: #7c3aed;
+}
+
+/* Skill Tags */
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    background-color: #F3E8FF;
+    color: #7c3aed;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Illustration Background Patterns */
+.illustration-bg {
+    background: radial-gradient(circle at 90% 10%, #d8b4fe 0%, transparent 40%),
+    radial-gradient(circle at 10% 90%, #e9d5ff 0%, transparent 40%);
+}

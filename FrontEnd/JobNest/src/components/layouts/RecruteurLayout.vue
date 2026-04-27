@@ -7,8 +7,8 @@ import {computed} from "vue";
 
 const store = useStore();
 const router = useRouter();
-const user = computed(() => store.state.user.data)
-console.log(user.value.image)
+const user = computed(() => store.state.auth.user)
+
 
 const logout = () => {
   store.dispatch('logout')
@@ -18,6 +18,7 @@ const logout = () => {
       })
     })
 }
+
 </script>
 
 <template>
@@ -28,7 +29,7 @@ const logout = () => {
         <div class="flex items-center gap-8">
           <div class="w-10 h-10 bg-purple-700 rounded-lg flex items-center justify-center text-white font-bold text-2xl">J</div>
           <div class="hidden md:flex gap-6 text-sm font-medium">
-            <a href="#" class="text-purple-700">Dashboard</a>
+            <a href="#" class="text-purple-700"></a>
             <a href="search-talent.html" class="text-gray-600 hover:text-purple-700">Search</a>
             <a href="proposals.html" class="text-gray-600 hover:text-purple-700">My Proposals</a>
           </div>

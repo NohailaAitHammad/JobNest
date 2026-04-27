@@ -12,6 +12,8 @@ import store from "@/store/index.js";
 import AuthLayout from "@/components/layouts/AuthLayout.vue";
 import RecruteurLayout from "@/components/layouts/RecruteurLayout.vue";
 import RecruteurDashboard from "@/views/Recruteurs/RecruteurDashboard.vue";
+import AdminLayout from "@/components/layouts/AdminLayout.vue";
+import AdminDashboard from "@/views/Admin/AdminDashboard.vue";
 
 
 const routes = [
@@ -28,7 +30,6 @@ const routes = [
   },
   {
     path: '/candidats',
-    redirect : '/candidats/dashboard',
     name : 'candidats',
     component : CandidatLayout,
     meta : {requiresAuth : true},
@@ -50,11 +51,17 @@ const routes = [
     ],
     meta : {requiresAuth : true}
   },
-
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('../views/AboutView.vue'),
+    path: '/admin',
+    redirect : '/admin/dashboard',
+    name : 'admin',
+    component :AdminLayout,
+    children : [
+      {
+        path : '/admin/dashboard', name : 'adminDashboard', component: AdminDashboard
+      }
+    ],
+    meta : {requiresAuth : true}
   },
   {
     path : "/register/signUpRecruteur",
@@ -85,19 +92,25 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if(to.meta.requiresAuth && !store.state.user.token){
+
+  const token = store.state.auth.token;
+  const user = store.state.auth.user;
+  const role = store.state.auth.role;
+
+  if(to.meta.requiresAuth && !token){
     next({name:'login'})
-  }else if(store.state.user.token  &&  (to.meta.isGuest)) {
-    next({name : 'candidatDashboard'});
-  } else if(store.state.user.token && (to.meta.isGuest)){
-    next({name : 'recruteurDashboard'});
   }
-  /*else if(store.state.user.token && store.state.user.data.role.role === 'admin' && (to.meta.isGuest)){
-    next({name : 'adminDashboard'});
-  }*/
-  else{
-    next()
+
+  if(token && to.meta.isGuest){
+    switch(role){
+      case 'candidat' : return next({name:'candidatDashboard'});
+      case 'recruteur' : return next({name:'home'});
+      case 'admin' : return next({name:'adminDashboard'});
+      default : return next({name : 'login'})
+    }
   }
+
+  return next();
 })
 
 

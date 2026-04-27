@@ -7,8 +7,8 @@ import {useRouter} from "vue-router";
 
 const store = useStore();
 const router = useRouter();
-const user = computed(() => store.state.user.data)
-console.log(user.value.image)
+const user = computed(() => store.state.auth.user)
+
 
 const logout = () => {
 store.commit('logout')
@@ -16,6 +16,8 @@ store.commit('logout')
     name: 'login'
   })
 }
+console.log(store.state.auth.user)
+
 </script>
 
 <template>
@@ -49,7 +51,7 @@ store.commit('logout')
         </button>
         <button @click ="logout" class="bg-red-600 px-4 py-2 rounded-2xl text-amber-50 cursor-pointer ">Log Out</button>
         <router-link to="/candidats/profile/5">
-          <img :src="user.image" class="w-10 h-10 rounded-full border-2 border-purple-200 cursor-pointer" alt="">
+          <img src class="w-10 h-10 rounded-full border-2 border-purple-200 cursor-pointer" alt="">
         </router-link>
       </div>
     </div>

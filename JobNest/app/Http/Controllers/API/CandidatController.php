@@ -162,11 +162,7 @@ class CandidatController extends Controller
 
     public function dashboard(ProfileCandidat $profileCandidat)
     {
-        $stats = $this->dashboardService->candidateDashboard($profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Statistique du candidt",
-            "data" => $stats
-        ]);
+        //$stats = $this->dashboardService->candidateDashboard($profileCandidat);
+        return view('candidat.dashboard');
     }
 }

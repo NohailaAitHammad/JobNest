@@ -2,10 +2,12 @@ import {createStore} from "vuex"
 import axiosClient from "../axios.js";
 const store = createStore({
   state : {
-    user : {
-      data : {},
-      token: localStorage.getItem('TOKEN')
-      }
+    auth : {
+      user : null,
+      token: localStorage.getItem('TOKEN'),
+      role : null,
+      isAuthenticated : !!localStorage.getItem('TOKEN')
+    }
   },
   getters : {},
   actions : {
@@ -19,6 +21,7 @@ const store = createStore({
     signUpRecruteur({commit}, user) {
       return axiosClient.post('/register/signUpRecruter', user)
         .then(({data}) => {
+          console.log(data)
           commit('setUser', data);
           return data
         })
@@ -40,14 +43,19 @@ const store = createStore({
   },
   mutations : {
 
-    setUser : (state, userData) => {
-      state.user.token = userData.token;
-      state.user.data = userData.data;
-      localStorage.setItem('TOKEN', userData.token);
+    setUser : (state, data) => {
+      state.auth.token = data.token;
+      state.auth.user = data.data.user;
+      state.auth.role = data.data.user.role.role;
+      state.auth.isAuthenticated = true;
+      console.log(data)
+      localStorage.setItem('TOKEN', data.token);
     },
     logout : (state) => {
-      state.user.data = {};
-      state.user.token = null
+      state.auth.user = null;
+      state.auth.token = null;
+      state.auth.role = null;
+      state.auth.isAuthenticated = false;
       localStorage.removeItem('TOKEN');
     },
   },

@@ -17,10 +17,7 @@ class IsRecruteur
     public function handle(Request $request, Closure $next): Response
     {
         if(auth()->user()->role->role !== RoleUser::recruteur) {
-            return response()->json([
-                "success" => false,
-                "message" => "Unauthorized Role"
-            ], 403);
+            return back()->with('error', "Unauthorized role");
         }
         return $next($request);
     }

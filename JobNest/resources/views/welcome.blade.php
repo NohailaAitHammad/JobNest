@@ -51,7 +51,7 @@
             Discover, hire, and manage top talent for your projects of any size. The full-hiring module designed for your success.
         </p>
         <div class="mt-8 flex gap-4">
-            <a href="{{ route('register.condidat') }}" class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a talent</a>
+            <a href="{{ route('register.candidat') }}" class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a talent</a>
             <a  href="{{ route('register.recruter') }}"   class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a Hire</a>
         </div>
     </div>

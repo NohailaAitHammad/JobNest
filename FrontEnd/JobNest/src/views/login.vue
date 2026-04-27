@@ -26,15 +26,10 @@ const login = () => {
         router.push({ name: 'candidatDashboard' });
       }
     })
-    .catch((error) => {
-      console.log("Error:", error);
-      errorMsg.value = error.response.data.message
-      errors.value = error.response.data.errors
-    });
+
 
 
 }
-console.log(store.state.user.data)
 </script>
 
 <template>

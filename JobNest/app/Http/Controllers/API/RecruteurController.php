@@ -120,10 +120,6 @@ class RecruteurController extends Controller
     public function dashboard(ProfileRecruteur $profileRecruteur)
     {
         $stats = $this->dashboardService->recruiterDashboard($profileRecruteur);
-        return response()->json([
-            "success" => true,
-            "message" => "Statistique du recruteur",
-            "data" => $stats
-        ]);
+        return view('recruter.dashboard');
     }
 }

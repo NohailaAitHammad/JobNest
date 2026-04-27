@@ -7,6 +7,7 @@ use App\Http\Resources\UserResource;
 use App\Http\Services\AdminService;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -90,5 +91,10 @@ class AdminController extends Controller
         ]);
     }
 
+    public function dashboard()
+    {
+        $user= Auth::user();
+      return view('admin.dashboard', compact('user'));
+    }
 
 }
