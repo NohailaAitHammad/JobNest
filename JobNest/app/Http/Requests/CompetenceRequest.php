@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class CompetenceRequest extends FormRequest
 {
@@ -24,5 +26,15 @@ class CompetenceRequest extends FormRequest
         return [
             "libelle" => ["required", "string", "max:255"]
         ];
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
+        );
     }
 }

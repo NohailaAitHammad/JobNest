@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class FilterCandidatsRequest extends FormRequest
 {
@@ -35,5 +37,15 @@ class FilterCandidatsRequest extends FormRequest
 
             "niveau" => ["sometimes", "string", "max:255"],
         ];
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
+        );
     }
 }

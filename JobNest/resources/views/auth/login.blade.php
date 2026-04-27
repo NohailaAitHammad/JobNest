@@ -11,10 +11,12 @@
             <div>
                 <label class="block text-sm font-medium mb-2">Email</label>
                 <input type="email" placeholder="Email" name="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
             <div>
                 <label class="block text-sm font-medium mb-2">Password</label>
                 <input type="password" placeholder="Password" name="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                @error('password') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
             <button type="submit" class="w-full py-3 bg-purple-700 text-white rounded-lg font-medium hover:bg-purple-800 transition-colors">Login</button>
 

@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
@@ -33,5 +35,15 @@ class LoginRequest extends FormRequest
             'email.exists' => "L'adresse email est introuvable.",
             'password:min' => "Le mot de passe doit contenir au moins 8 caractères."
         ];
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
+        );
     }
 }

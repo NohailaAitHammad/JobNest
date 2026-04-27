@@ -16,26 +16,31 @@
                 <div>
                     <label class="block text-sm font-medium mb-2">First Name</label>
                     <input type="text" placeholder="First Name" id="firstName" name="firstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                    @error('firstName') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
                 <div>
                     <label class="block text-sm font-medium mb-2">Last Name</label>
                     <input type="text" placeholder="Last Name" id="lastName" name="lastName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                    @error('lastName') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                 </div>
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Business Email Address</label>
                 <input type="email" placeholder="Business Email Address" name="email" id="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                @error('email') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Password</label>
                 <input type="password" placeholder="Password" name="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                @error('password') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div>
                 <label class="block text-sm font-medium mb-2">Confirm Password</label>
                 <input type="password" placeholder="Confirm Password" name="password_confirmation" id="password_confirmation" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                @error('password_confirmation') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <button type="submit" class="w-full py-3 bg-purple-700 text-white rounded-lg font-medium hover:bg-purple-800 transition-colors mt-6">Signup</button>

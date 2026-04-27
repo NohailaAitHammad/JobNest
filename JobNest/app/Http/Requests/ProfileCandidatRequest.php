@@ -4,7 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Validator;
 
 class ProfileCandidatRequest extends FormRequest
 {
@@ -35,5 +37,15 @@ class ProfileCandidatRequest extends FormRequest
             "portfolio_url" => ["sometimes", "required", "file","mimes:pdf", "max:2048"],
             "est_visible" => ["sometimes", "required"]
         ];
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
+        );
     }
 }
