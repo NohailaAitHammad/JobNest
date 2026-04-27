@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileCandidatRequest extends FormRequest
 {
@@ -23,6 +24,10 @@ class ProfileCandidatRequest extends FormRequest
     public function rules(): array
     {
         return [
+            "firstName" => ["sometimes", "required", "string", "max:255"],
+            "lastName"   => ["sometimes", "required", "string", "max:255"],
+            "email"      => ["sometimes", "required", "email", "unique:users,email," . Auth::id()],
+
             "imageURL" => ["sometimes","required", "image", "mimes:jpeg,jpg,png,gif"],
             "ville" => ["sometimes", "required", "string", "max:255"],
             "telephone" => ["sometimes", "required", "string", "max:255"],

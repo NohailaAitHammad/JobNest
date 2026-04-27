@@ -90,7 +90,7 @@ class User extends Authenticatable
     // Helpers
     public function hasRole(string $role): bool
     {
-        return $this->roles()->where('role', $role)->exists();
+        return $this->role()->where('role', $role)->exists();
     }
 
     public function isCandidat(): bool

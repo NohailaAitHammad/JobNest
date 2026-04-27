@@ -1,13 +1,13 @@
 <?php
 
 use App\Http\Controllers\API\AdminController;
-use App\Http\Controllers\API\CandidatController;
 use App\Http\Controllers\API\CertificatController;
 use App\Http\Controllers\API\CompetenceController;
 use App\Http\Controllers\API\DomaineController;
 use App\Http\Controllers\API\ExperienceController;
 use App\Http\Controllers\API\RecruteurController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CandidatController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',
@@ -33,13 +33,18 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware(['auth', 'is.candidat'])->group(callback: function () {
-    Route::get("/candidats/profile/{profileCandidat}", [CandidatController::class, "show"])->name('candidat.show');
-    Route::put("/candidats/profile/{profileCandidat}", [CandidatController::class, "update"])->name('candidat.profile.update');
+
+    /* gestion du profile candidat */
+    Route::get("/candidats/profile", [CandidatController::class, "show"])->name('candidat.show');
+    Route::get("/candidat/profile/edit", [CandidatController::class, 'edit'])->name('candidat.edit');
+    Route::put("/candidats/profile", [CandidatController::class, "update"])->name('candidat.profile.update');
     Route::patch("/candidats/profile/visibility", [CandidatController::class, "toggleVisibility"])->name('candidat.profile.toggle-visibility');
-    Route::post("/candidats/profile/{profileCandidat}/cv", [CandidatController::class, "uploadCV"])->name('candidat.upload-cv');
-    Route::post("/candidats/profile/{profileCandidat}/portfolio", [CandidatController::class, "uploadPortfolio"])->name('candidat.upload-portfolio');
-    Route::post("/candidats/profile/{profileCandidat}/image", [CandidatController::class, "uploadImage"])->name('candidat.upload-image');
-    Route::delete("/candidats/profile/{profileCandidat}/delete", [CandidatController::class, "destroy"])->name('candidat.destroy');
+    Route::post("/candidats/profile/cv", [CandidatController::class, "uploadCV"])->name('candidat.upload-cv');
+    Route::post("/candidats/profile/portfolio", [CandidatController::class, "uploadPortfolio"])->name('candidat.upload-portfolio');
+    Route::post("/candidats/profile/image", [CandidatController::class, "uploadImage"])->name('candidat.upload-image');
+    Route::delete("/candidats/profile/delete", [CandidatController::class, "destroy"])->name('candidat.destroy');
+
+
     Route::post("/candidats/profile/{profileCandidat}/competences", [CompetenceController::class, 'addCompetence'])->name('candidats.profile.competences.add');
     Route::post("/candidats/profile/{profileCandidat}/competences/{competence}", [CompetenceController::class, 'removeCompetence'])->name('candidats.profile.competence.destroy');
 
@@ -60,7 +65,7 @@ Route::middleware(['auth', 'is.candidat'])->group(callback: function () {
     Route::post("/candidats/profile/{profileCandidat}/certifications", [CertificatController::class, "store"])->name('candidats.certifications.store');
     Route::put("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "update"])->name('candidats.certifications.update');
     Route::delete("/candidats/profile/{profileCandidat}/certifications/{certification}", [CertificatController::class, "destroy"])->name('candidats.certifications.destroy');
-    Route::get("/candidats/propositions", [CandidatController::class, "getAllPropositionReceivedByCandidat"])->name('candidats.propositions');
+    Route::get("/candidats/propositions", [CandidatController::class, "getAllPropositionReceivedByCandidat"])->name('candidat.propositions');
     Route::post("/candidats/propositions/{proposition}/accepter", [CandidatController::class, "accepterProposition"])->name('candidat.proposition.accepter');
     Route::post("/candidats/propositions/{proposition}/refuser", [CandidatController::class, "refuserProposition"])->name('candidats.proposition.refuser');
     Route::get("/candidats/dashboard", [CandidatController::class, "dashboard"])->name('candidat.dashboard');
@@ -68,18 +73,19 @@ Route::middleware(['auth', 'is.candidat'])->group(callback: function () {
 });
 
 Route::middleware(['auth', 'is.recruteur'])->group(function () {
-    Route::get("/recruteurs/profile/{profileRecruteur}", [RecruteurController::class, "show"])->name('recruteurs.profile');
-    Route::put("/recruteurs/profile/{profileRecruteur}", [RecruteurController::class, "update"])->name('recruteurs.profile.update');
-    Route::delete("/recruteurs/profile/{profileRecruteur}/delete", [RecruteurController::class, "destroy"])->name('recruteurs.profile.destroy');
+    Route::get("/recruteurs/profile", [RecruteurController::class, "show"])->name('recruteur.show');
+    Route::put("/recruteurs/profile", [RecruteurController::class, "update"])->name('recruteurs.profile.update');
+    Route::delete("/recruteurs/profile/delete", [RecruteurController::class, "destroy"])->name('recruteurs.profile.destroy');
     Route::get("/recruteurs/search", [RecruteurController::class, "searchCandidats"])->name('recruteur.search-candidats');
 
-    Route::post("/recruteurs/propositions/{user}", [RecruteurController::class, "sendPropositions"])->name('recruteur.propositions-send');
+    Route::post("/recruteurs/propositions", [RecruteurController::class, "sendPropositions"])->name('recruteur.propositions-send');
     Route::get("/recruteurs/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"])->name('recruteur.propositions');
     Route::get("/recruteur/dashboard", [RecruteurController::class, "dashboard"])->name('recruteur.dashboard');
 
 });
 
 Route::middleware(['auth', 'is.admin'])->group(function (){
+    Route::get("/admin/profile", [AdminController::class, "show"])->name('admin.show');
     Route::post('/competences', [CompetenceController::class, "store"])->name('competence.store');
     Route::put('/competences/{competence}', [CompetenceController::class, "store"])->name('competence.store');
     Route::delete('/competences/{competence}', [CompetenceController::class, "destroy"])->name('competence.destroy');
