@@ -10,7 +10,9 @@
             <div class="hidden md:flex gap-6 text-sm font-medium">
                 @if(auth()->user()->isAdmin())
                     <a href="{{ route('admin.dashboard') }}" class="text-purple-600 hover:text-purple-700 transition-colors">Admin Panel</a>
-                    <a href="#" class="text-gray-600 hover:text-purple-700 transition-colors">Manage Users</a>
+                    <a href="{{ route('admin.users.index') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Manage Users</a>
+                    <a href="{{ route('admin.competences.index') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Manage Skills</a>
+                    <a href="{{ route('admin.domaines.index') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Manage Libraries</a>
                 @elseif(auth()->user()->isRecruteur())
                     <a href="{{ route('recruteur.dashboard') }}" class="text-purple-600 hover:text-purple-700 transition-colors">Recruiter Dashboard</a>
                     <a href="{{ route('recruteurs.propositions') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Sent Proposals</a>
@@ -39,10 +41,6 @@
                     <a href="{{ route('candidat.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
                         <i class="fas fa-cog text-xl"></i>
                     </a>
-                @else
-                    <a href="#" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
-                        <i class="fas fa-cog text-xl"></i>
-                    </a>
                 @endif
 
                 <form action="{{ route('logout') }}" method="POST" class="inline">
@@ -52,11 +50,8 @@
                     </button>
                 </form>
 
-                @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
-                        <i class="fas fa-cog text-xl"></i>
-                    </a>
-                @elseif(auth()->user()->isRecruteur())
+
+                @if(auth()->user()->isRecruteur())
                     <a href="{{ route('recruteurs.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
                         <img src="{{ (auth()->user()->profileRecruteur && auth()->user()->profileRecruteur->imageURL)
                         ? asset('storage/' . auth()->user()->profileRecruteur->imageURL)

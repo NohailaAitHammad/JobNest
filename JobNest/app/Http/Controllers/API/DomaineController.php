@@ -27,57 +27,35 @@ class DomaineController extends Controller
     public function index()
     {
         $domaines = $this->domaineService->getAllDomaines();
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des domaines",
-            "data" =>  DomaineResource::collection($domaines)
-        ]);
+        return view('admin.domaines.index', compact('domaines'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    public function create()
+    {
+        return view('admin.domaines.create');
+    }
+
     public function store(DomaineRequest $request)
     {
         $domaine = $this->domaineService->addDomaine($request);
-        return response()->json([
-            "success" => true,
-            "message" => "Domaine cree avec success",
-            "data" => new DomaineResource($domaine)
-        ], 201);
+       return redirect()->route('admin.domaines.index')->with('success', "Domaine ajouté !");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Domaine $domaine)
     {
-        //
+        return view('admin.domaines.edit', compact('domaine'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(DomaineRequest $request, Domaine $domaine)
     {
         $this->domaineService->updateDomaine($request, $domaine);
-        return response()->json([
-            "success" => true,
-            "message" => "Domaine modifier avec success",
-            "data" => new DomaineResource($domaine)
-        ]);
+        return redirect()->route('admin.domaines.index')->with('success', "Domaine mis à jour !");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Domaine $domaine)
     {
         $this->domaineService->delete($domaine);
-        return response()->json([
-            "success" => true,
-            "message" => "Domaine cree avec success",
-            "data" => new DomaineResource($domaine)
-        ]);
+        return redirect()->route('admin.domaines.index')->with('success', "Domaine supprimé !");
     }
 }

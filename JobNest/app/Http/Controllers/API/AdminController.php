@@ -28,73 +28,35 @@ class AdminController extends Controller
     public function index()
     {
         $users= $this->adminService->getUsers();
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des utilisateurs",
-            "data" => UserResource::collection($users)
-        ]) ;
-
+        return view('admin.users.index', compact('users'));
     }
 
 
-    public function Toggle(Request $request, User $user)
+    public function toggle(Request $request, User $user)
     {
         $this->adminService->toggleUserStatus($user);
-        return response()->json([
-            "success" => true,
-            'message' => "Utilisateur {$user->status}"
-        ]);
+        return redirect()->back()->with('success', "Status de l'utilisateur mis à jour.");
     }
 
-    public function stats()
+    public function show()
     {
-        $stats = $this->adminService->getStats();
-        return response()->json([
-            "success" => true,
-            'message' => "Statistique de la platform",
-            "data" => $stats
-        ]);
-    }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        $user = Auth::user();
+        $user->load(['role', 'profileCandidat.experiences', 'profileCandidat.certifications', 'profileCandidat.competences', 'profileRecruteur.entreprise.domaines']);
+
+        return view('admin.profile.show', compact('user'));
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
         $this->adminService->deleteUser($user);
-        return response()->json([
-            "success" => true,
-            'message' => "Utilisateur bien Supprimer "
-        ]);
+        return redirect()->back()->with('success', "Utilisateur supprimé définitivement");
     }
 
     public function dashboard()
     {
         $user= Auth::user();
-      return view('admin.dashboard', compact('user'));
+        $stats = $this->adminService->getStats();
+      return view('admin.dashboard', compact('user', 'stats'));
     }
 
 }

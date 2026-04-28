@@ -98,8 +98,16 @@ Route::middleware(['auth', 'is.recruteur'])->group(function () {
 });
 
 Route::middleware(['auth', 'is.admin'])->group(function (){
+    /* Profile et Dashboard */
+    Route::get("/admin/dashboard", [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get("/admin/profile", [AdminController::class, "show"])->name('admin.show');
 
+    /* Gestion des utilisateurs */
+    Route::get('/admin/users', [AdminController::class, 'index'])->name('admin.users.index');
+    Route::patch('/admin/users/{user}/toggle', [AdminController::class, 'toggle'])->name('admin.users.toggle');
+    Route::delete('/admin/users', [AdminController::class, 'destroy'])->name('admin.users.destroy');
+
+    /* Gestion des competences */
     Route::get('/admin/competences', [CompetenceController::class, 'adminIndex'])->name('admin.competences.index');
     Route::get('/admin/competences/create', [CompetenceController::class, 'create'])->name('admin.competences.create');
     Route::post('/admin/competences', [CompetenceController::class, "store"])->name('admin.competences.store');
@@ -107,13 +115,12 @@ Route::middleware(['auth', 'is.admin'])->group(function (){
     Route::put('/admin/competences/{competence}', [CompetenceController::class, "update"])->name('admin.competences.update');
     Route::delete('/admin/competences/{competence}', [CompetenceController::class, "destroy"])->name('admin.competences.destroy');
 
+    /* Gestion des domaines */
+    Route::get("/admin/domaines", [DomaineController::class, "index"])->name('admin.domaines.index');
+    Route::get("/admin/domaines/create", [DomaineController::class, "create"])->name('admin.domaines.create');
+    Route::get("/admin/domaines/{domaine}/edit", [DomaineController::class, "edit"])->name('admin.domaines.edit');
+    Route::post("/admin/domaines", [DomaineController::class, "store"])->name('admin.domaines.store');
+    Route::put("/admin/domaines/{domaine}", [DomaineController::class, "update"])->name('admin.domaines.update');
+    Route::delete("/admin/domaines/{domaine}", [DomaineController::class, "destroy"])->name('admin.domaines.destroy');
 
-
-    Route::get("/admins/domaines", [DomaineController::class, "index"])->name('admin.competences');
-    Route::post("/admins/domaines", [DomaineController::class, "store"])->name('admin.domaine.store');
-
-
-    Route::put("/admins/domaines/{domaine}", [DomaineController::class, "update"])->name('admin.domaine.update');
-    Route::delete("/admins/domaines/{domaine}/delete", [DomaineController::class, "destroy"])->name('admin.domaine.destroy');
-    Route::get("/admin/dashboard", [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
