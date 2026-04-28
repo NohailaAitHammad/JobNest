@@ -9,13 +9,14 @@
         @auth
             <div class="hidden md:flex gap-6 text-sm font-medium">
                 @if(auth()->user()->isAdmin())
-                    <a href="{{ route('admin.dashboard') }}" class="text-purple-700">Admin Panel</a>
+                    <a href="{{ route('admin.dashboard') }}" class="text-purple-600 hover:text-purple-700 transition-colors">Admin Panel</a>
                     <a href="#" class="text-gray-600 hover:text-purple-700 transition-colors">Manage Users</a>
                 @elseif(auth()->user()->isRecruteur())
-                    <a href="{{ route('recruteur.dashboard') }}" class="text-purple-700">Recruiter Dashboard</a>
+                    <a href="{{ route('recruteur.dashboard') }}" class="text-purple-600 hover:text-purple-700 transition-colors">Recruiter Dashboard</a>
+                    <a href="{{ route('recruteurs.propositions') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Sent Proposals</a>
                     <a href="{{ route('recruteur.search-candidats') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Search Talents</a>
                 @else
-                    <a href="{{ route('candidat.dashboard') }}" class="text-purple-700">Dashboard</a>
+                    <a href="{{ route('candidat.dashboard') }}" class="text-purple-600 hover:text-purple-700 transition-colors">Dashboard</a>
                     <a href="{{ route('candidats.propositions.index') }}" class="text-gray-600 hover:text-purple-700 transition-colors">My Propositions</a>
                 @endif
             </div>
@@ -31,7 +32,7 @@
                         <i class="fas fa-cog text-xl"></i>
                     </a>
                 @elseif(auth()->user()->isRecruteur())
-                    <a href="{{ route('recruteur.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
+                    <a href="{{ route('recruteurs.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
                         <i class="fas fa-cog text-xl"></i>
                     </a>
                 @elseif(auth()->user()->isCandidat())
@@ -56,9 +57,9 @@
                         <i class="fas fa-cog text-xl"></i>
                     </a>
                 @elseif(auth()->user()->isRecruteur())
-                    <a href="{{ route('recruteur.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
+                    <a href="{{ route('recruteurs.show')}}" class="p-2 text-gray-600 hover:text-purple-700 transition-colors">
                         <img src="{{ (auth()->user()->profileRecruteur && auth()->user()->profileRecruteur->imageURL)
-                        ? asset('storage/' . auth()->user()->profileCandidat->imageURL)
+                        ? asset('storage/' . auth()->user()->profileRecruteur->imageURL)
                         : 'https://ui-avatars.com/api/?name='.auth()->user()->firstName }}"
                              class="w-10 h-10 rounded-full border-2 border-purple-200 cursor-pointer object-cover" alt="User Profile">
                     </a>

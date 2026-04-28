@@ -9,6 +9,8 @@ use App\Models\ProfileCandidat;
 use App\Models\ProfileRecruteur;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class RecruteurService
 {
@@ -25,106 +27,90 @@ class RecruteurService
     public function updateProfile(RecruteurRequest $request, ProfileRecruteur $profileRecruteur)
     {
         $validated = $request->validated();
-//        $profileRecruteur->entreprise()->firstOrCreate(
-//            [
-//            "profile_recruteur_id" => $profileRecruteur->id
-//        ], [
-//                "nom" => $validated->nom,
-//                "ville" => $validated->ville,
-//                "dateCreation" => $validated->dateCreation,
-//                "nombreEmployees" => $validated->nombreEmployees,
-//                "description" => $validated->description]
-//        );
-        $recruteurData = [
-            "imageURL" => $validated["imageURL"],
-            "ville" => $validated["ville"],
-            "telephone" => $validated["telephone"],
-            "poste" => $validated["poste"]
-        ];
-        $profileRecruteur->update($recruteurData);
+
+        $user = $profileRecruteur->user;
+        $userData = [];
+        if (isset($validated['firstName'])) $userData['firstName'] = $validated['firstName'];
+        if (isset($validated['lastName']))  $userData['lastName']  = $validated['lastName'];
+        if (isset($validated['email']))     $userData['email']     = $validated['email'];
+
+        if (!empty($userData)) {
+            $user->update($userData);
+        }
+
+
+        if ($request->hasFile('imageURL')) {
+            if ($profileRecruteur->imageURL && Storage::disk("public")->exists($profileRecruteur->imageURL)) {
+                Storage::disk("public")->delete($profileRecruteur->imageURL);
+            }
+            $path = $request->file('imageURL')->store('recruteurs', 'public');
+            $profileRecruteur->update(['imageURL' => $path]);
+        }
+
+        $profileData = array_intersect_key($validated, array_flip([
+            'ville', 'telephone', 'poste'
+        ]));
+        $profileRecruteur->update($profileData);
+
         $entrepriseData = [
-            "nom" => $validated["nom"],
-            "ville" => $validated['ville'],
-            "dateCreation" => $validated['dateCreation'],
-            "nombreEmployees" => $validated["nombreEmployees"],
-            "description" => $validated["description"],
-            "profile_recruteur_id" => $profileRecruteur->id,
+            'nom'              => $validated['nom'] ?? $profileRecruteur->entreprise->nom,
+            'ville'            => $validated['ville'] ?? $profileRecruteur->entreprise->ville,
+            'dateCreation'     => $validated['dateCreation'] ?? $profileRecruteur->entreprise->dateCreation,
+            'nombreEmployees'  => $validated['nombreEmployees'] ?? $profileRecruteur->entreprise->nombreEmployees,
+            'description'      => $validated['description'] ?? $profileRecruteur->entreprise->description,
         ];
 
-        if(!$profileRecruteur->entreprise){
+        if (!$profileRecruteur->entreprise) {
             $profileRecruteur->entreprise()->create($entrepriseData);
-        }else {
-            $profileRecruteur->entreprise()->update($entrepriseData);
+        } else {
+            $profileRecruteur->entreprise->update($entrepriseData);
         }
-        $profileRecruteur->entreprise->domaines()->sync($validated["domaine"]);
-        return $profileRecruteur->load(["user", "entreprise"]);
+
+        if (isset($validated['domaine'])) {
+            $profileRecruteur->entreprise->domaines()->sync($validated['domaine']);
+        }
+
+        return $profileRecruteur;
     }
 
     public function deleteProfileRecruteur(Request $request, ProfileRecruteur $profileRecruteur)
     {
-        if(!$request->user()){
-            return response()->json([
-                "success" => false,
-                "message" => "Unauthenticated"
-            ], 401);
-        }
-        if(auth()->id() !== $profileRecruteur->user_id){
-            return response()->json([
-                "success" => false,
-                "message" => "Unauthorized"
-            ], 403);
-        }
-
-        $request->user()->currentAccessToken()->delete();
-
         $profileRecruteur->delete();
-        return $request->user()->delete();
-        //$profileRecruteur->delete();
-        //return $request->user()->currentAccessToken()->delete();
+        $profileRecruteur->user->delete();
+        return true;
     }
 
     public function searchCandidats(array $filters)
     {
-        $query =  ProfileCandidat::query()
-            ->where('profile_candidats.est_visible', true)
+        $query = ProfileCandidat::query()
+            ->where('est_visible', true)
             ->with(["user", "competences", "certifications", "experiences"]);
 
-        if(!empty($filters["ville"])){
-                $query->where('ville', $filters['ville']);
-        }
+        $query->when($filters['ville'] ?? null, function ($q, $ville) {
+            $q->where('ville', 'like', '%' . $ville . '%');
+        });
 
-        if(!empty($filters["status"])){
-            $query->whereHas('user', function($q) use($filters){
-                $q->where('status', $filters['status']);
+        $query->when($filters['status'] ?? null, function ($q, $status) {
+            $q->whereHas('user', function ($userQuery) use ($status) {
+                $userQuery->where('status', $status);
+            });
+        });
+
+
+        $competences = $filters['competences'] ?? null;
+        if (!empty($competences) && is_array($competences)) {
+            $query->whereHas('competences', function ($q) use ($competences) {
+                $q->whereIn('competences.id', $competences);
             });
         }
-
-        if(!empty($filters['competences']) && is_array($filters['competences'])){
-            $query->whereHas('competences', function ($q) use($filters){
-                $q->whereIn('competences.id', $filters['competences']);
+        $query->when($filters['niveau'] ?? null, function ($q, $niveau) {
+            $q->whereHas('competences', function ($compQuery) use ($niveau) {
+                $compQuery->where('niveau', $niveau);
             });
-        }
+        });
 
-//        if(!empty($filters['certifications']) && is_array($filters['certifications'])){
-//            $query->whereHas('certifications', function ($q) use($filters){
-//                $q->whereIn('certifications.id', $filters['certifications']);
-//            });
-//        }
-
-        if(!empty($filters['niveau'])){
-            $query->whereHas('competences', function ($q) use($filters){
-                $q->where('niveau', $filters['niveau']);
-            });
-        }
-
-//        if(!empty($filters['keywords'])){
-//            $keywords = $filters['keywords'];
-//            $query->where(function ($q) use($keywords){
-//                $q->where("titre", "like", "%{$keywords}%");
-//            });
-//        }
         return $query
             ->orderBy('created_at', 'desc')
-            ->paginate(5);
+            ->paginate(6);
     }
 }

@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
 
-
     <div class="max-w-7xl mx-auto px-8 pt-12 mb-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-3xl shadow-sm border border-purple-50">
 
@@ -24,8 +23,13 @@
                     </p>
                 </div>
             </div>
-
-
+            <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-gray-100 border border-gray-200">
+                <span class="text-[10px] uppercase font-bold text-gray-500">Profile Strength</span>
+                <span class="text-xs font-bold {{ $stats['profile_complete'] ? 'text-green-600' : 'text-orange-500' }}">
+                        {{ $stats['profile_complete'] ? 'Completed' : 'Incomplete' }}
+                    </span>
+            </div>
             <div class="flex items-center gap-3 bg-purple-50 px-4 py-2 rounded-full border border-purple-100">
                 <div class="flex flex-col items-end">
                     <span class="text-[10px] uppercase font-bold text-purple-400 tracking-wider">Profile Status</span>
@@ -38,26 +42,13 @@
                 </a>
             </div>
 
+            </div>
+
         </div>
     </div>
 
-
-
     <div class="page-header-bg text-white py-12 px-8">
         <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-6">
-
-
-            <div class="glass-card rounded-2xl p-6 text-gray-800 flex items-center gap-4 card-hover">
-                <div
-                    class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 text-xl">
-                    <i class="fas fa-eye"></i>
-                </div>
-                <div>
-                    <div class="text-3xl font-bold text-purple-800">{{ $user->vues->count() }}</div>
-                    <div class="text-sm text-purple-600">Profile Views</div>
-                </div>
-            </div>
-
 
             <div class="glass-card rounded-2xl p-6 text-gray-800 flex items-center gap-4 card-hover">
                 <div
@@ -69,7 +60,6 @@
                     <div class="text-sm text-purple-600">Proposals Received</div>
                 </div>
             </div>
-
 
             <div class="glass-card rounded-2xl p-6 text-gray-800 flex items-center gap-4 card-hover">
                 <div
@@ -95,6 +85,16 @@
                         {{ $propositions->where('status', 'accepter')->count() }}
                     </div>
                     <div class="text-sm text-purple-600">Accepted</div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6 text-gray-800 flex items-center gap-4 card-hover">
+                <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-purple-700 text-xl">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+                <div>
+                    <div class="text-3xl font-bold text-purple-800">{{ $propositions->where('status', 'refuser')->count() }}</div>
+                    <div class="text-sm text-purple-600">Rejected</div>
                 </div>
             </div>
         </div>
@@ -151,6 +151,9 @@
                     <p class="text-gray-500">No proposals received yet. Complete your profile to attract recruiters!</p>
                 </div>
             @endforelse
+                <div class="mt-8">
+                    {{ $propositions->links() }}
+                </div>
         </div>
     </div>
 @endsection

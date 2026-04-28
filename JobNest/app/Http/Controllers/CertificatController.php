@@ -1,19 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\CertificationRequest;
-use App\Http\Resources\CertificationResource;
-use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CertificationService;
 use App\Models\Certification;
-use App\Models\Experience;
-use App\Models\ProfileCandidat;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CertificatController extends Controller
 {

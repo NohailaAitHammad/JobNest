@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CertificationRequest;
 use App\Http\Requests\CompetenceRequest;
-use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\CompetenceService;
-use App\Models\Experience;
 use App\Models\Competence;
-use App\Models\ProfileCandidat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 

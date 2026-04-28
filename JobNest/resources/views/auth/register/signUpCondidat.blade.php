@@ -15,7 +15,7 @@
             <div>
                 <label class="block text-sm font-medium mb-2">FirstName</label>
                 <input type="text" placeholder="FirstName" name="firstName"  id="firstName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
-                *@error('firstName') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                @error('firstName') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
             </div>
 
             <div>

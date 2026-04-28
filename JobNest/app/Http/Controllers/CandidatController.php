@@ -134,21 +134,9 @@ class CandidatController extends Controller
     public function getAllPropositionReceivedByCandidat()
     {
         $propositions = $this->propositionService->getAllPropositionReceivedByCandidat(auth()->user());
-        return view('candidat.propositions', compact('propositions'));
+        return view('candidat.propositions.index', compact('propositions'));
     }
 
-
-    public function accepterProposition(PropositionRequest $propositionRequest,Proposition $proposition)
-    {
-        $this->propositionService->accepte($proposition);
-        return redirect()->back()->with('success', 'Proposition acceptée');
-    }
-
-    public function refuserProposition(Proposition $proposition)
-    {
-        $this->propositionService->refuser($proposition);
-        return redirect()->back()->with('success', 'Proposition refusée');
-    }
 
     public function dashboard()
     {
@@ -156,8 +144,8 @@ class CandidatController extends Controller
         $profileCandidat = $user->profileCandidat;
         $propositions = $this->propositionService->getAllPropositionReceivedByCandidat($user);
 
-        // $stats = $this->dashboardService->candidateDashboard($profileCandidat);
+         $stats = $this->dashboardService->candidateDashboard($profileCandidat);
 
-        return view('candidat.dashboard', compact('user', 'profileCandidat', 'propositions'));
+        return view('candidat.dashboard', compact('user', 'profileCandidat', 'propositions', 'stats'));
     }
 }

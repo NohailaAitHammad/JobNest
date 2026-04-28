@@ -2,6 +2,7 @@
 
 namespace App\Http\Services;
 
+use App\Enums\StatusProp;
 use App\Enums\StatusUser;
 use App\Models\ProfileCandidat;
 use App\Models\ProfileRecruteur;
@@ -12,16 +13,17 @@ class DashboardService
 
     public function candidateDashboard(ProfileCandidat $profileCandidat): array
     {
-        //$profile = CandidateProfile::where('user_id', $userId)->first();
+        $user = $profileCandidat->user;
         return [
             'profile_complete'      => $this->isProfileComplete($profileCandidat),
-            'total_experiences'     => $profileCandidat?->experiences()->count() ?? 0,
-            'total_competences'     => $profileCandidat?->competences()->count() ?? 0,
-            'total_certifications'  => $profileCandidat?->certifications()->count() ?? 0,
-            'pending_propositions'  => Proposition::where('candidat_id', $profileCandidat->user_id)
-                ->where('status', 'pending')->count(),
-            'accepted_propositions' => Proposition::where('candidat_id', $profileCandidat->user_id)
-                ->where('status', 'accepted')->count(),
+            'total_experiences'     => $profileCandidat->experiences()->count() ?? 0,
+            'total_competences'     => $profileCandidat->competences()->count() ?? 0,
+            'total_certifications'  => $profileCandidat->certifications()->count() ?? 0,
+            'pending_propositions'  => $user->propositionsRecues()
+                                        ->where('status', StatusProp::pending->value)
+                                        ->count(),
+            'accepted_propositions' => $user->propositionsRecues()
+                                        ->where('status', StatusProp::accepter->value)->count(),
             'is_visible'            => $profileCandidat?->est_visible,
         ];
     }
@@ -29,21 +31,26 @@ class DashboardService
 
     public function recruiterDashboard(ProfileRecruteur $profileRecruteur): array
     {
+        $user = $profileRecruteur->user;
         return [
-            'total_propositions_sent' => Proposition::where('recruteur_id', $profileRecruteur->user_id)->count(),
-            'pending'                 => Proposition::where('recruteur_id', $profileRecruteur->user_id)
-                ->where('status', 'pending')->count(),
-            'accepted' => Proposition::where('recruteur_id', $profileRecruteur->user_id)
-                ->where('status', 'accepted')->count(),
-            'rejected' => Proposition::where('recruteur_id', $profileRecruteur->user_id)
-                ->where('status', 'rejected')->count(),
+            'total_propositions_sent' => $user->propositionsEnvoyees()->count(),
+            'pending'                 => $user->propositionsEnvoyees()
+                                        ->where('status', StatusProp::pending->value)->count(),
+            'accepted' => $user->propositionsEnvoyees()
+                            ->where('status', StatusProp::accepter->value)->count(),
+            'rejected' => $user->propositionsEnvoyees()
+                ->where('status', StatusProp::refuser->value)->count(),
         ];
     }
 
     private function isProfileComplete(?ProfileCandidat $profileCandidat): bool
     {
         if (!$profileCandidat) return false;
-        return  filled($profileCandidat->ville) &&  filled($profileCandidat->telephone) && filled($profileCandidat->imageURL) && filled($profileCandidat->portfolio_url) && filled($profileCandidat->cv_url);
+        return  filled($profileCandidat->ville)
+            &&  filled($profileCandidat->telephone)
+            && filled($profileCandidat->imageURL)
+            && filled($profileCandidat->portfolio_url)
+            && filled($profileCandidat->cv_url);
     }
 
 }

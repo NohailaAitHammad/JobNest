@@ -28,7 +28,8 @@ class PropositionRequest extends FormRequest
             "titre" => ['sometimes', 'string', 'max:255'],
             "description" => ['sometimes', "string", "max:255"],
             "type" => ['sometimes', "in:stage,emploi,alternance"],
-            "duree" => ['sometimes', 'string', 'max:255']
+            "duree" => ['sometimes', 'string', 'max:255'],
+            "candidat_id" => ["required", 'int', 'exists:users,id']
         ];
     }
 

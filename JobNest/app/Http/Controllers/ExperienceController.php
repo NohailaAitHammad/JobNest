@@ -1,16 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\ExperienceRequest;
-use App\Http\Resources\ExperienceResource;
-use App\Http\Resources\ProfileCandidatResource;
 use App\Http\Services\ExperienceService;
 use App\Models\Experience;
 use App\Models\ProfileCandidat;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ExperienceController extends Controller

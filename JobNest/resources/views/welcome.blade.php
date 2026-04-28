@@ -52,7 +52,7 @@
         </p>
         <div class="mt-8 flex gap-4">
             <a href="{{ route('register.candidat') }}" class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a talent</a>
-            <a  href="{{ route('register.recruter') }}"   class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a Hire</a>
+            <a  href="{{ route('register.recruteur') }}"   class="border border-gray-300 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-50">I am a Hire</a>
         </div>
     </div>
     <div class="w-full md:w-1/2 flex justify-center">

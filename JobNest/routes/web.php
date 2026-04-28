@@ -1,14 +1,14 @@
 <?php
 
 use App\Http\Controllers\API\AdminController;
-use App\Http\Controllers\API\CertificatController;
-use App\Http\Controllers\API\CompetenceController;
 use App\Http\Controllers\API\DomaineController;
-use App\Http\Controllers\API\ExperienceController;
-use App\Http\Controllers\API\PropositionController;
 use App\Http\Controllers\API\RecruteurController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidatController;
+use App\Http\Controllers\CertificatController;
+use App\Http\Controllers\CompetenceController;
+use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\PropositionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',
@@ -76,21 +76,25 @@ Route::middleware(['auth', 'is.candidat'])->group(callback: function () {
     Route::post("/candidats/propositions/{proposition}/accepter", [PropositionController::class, "accepter"])->name('candidats.propositions.accepter');
     Route::post("/candidats/propositions/{proposition}/refuser", [PropositionController::class, "refuser"])->name('candidats.propositions.refuser');
 
-
+    /* dashboard candidat */
     Route::get("/candidats/dashboard", [CandidatController::class, "dashboard"])->name('candidat.dashboard');
 
 });
 
 Route::middleware(['auth', 'is.recruteur'])->group(function () {
-    Route::get("/recruteurs/profile", [RecruteurController::class, "show"])->name('recruteur.show');
-    Route::put("/recruteurs/profile", [RecruteurController::class, "update"])->name('recruteurs.profile.update');
-    Route::delete("/recruteurs/profile/delete", [RecruteurController::class, "destroy"])->name('recruteurs.profile.destroy');
+
+    Route::get("/recruteurs/profile", [RecruteurController::class, "show"])->name('recruteurs.show');
+    Route::get("/recruteurs/profile/edit", [RecruteurController::class, "edit"])->name('recruteurs.edit');
+    Route::put("/recruteurs/profile", [RecruteurController::class, "update"])->name('recruteurs.update');
+    Route::delete("/recruteurs/profile/delete", [RecruteurController::class, "destroy"])->name('recruteurs.destroy');
+
     Route::get("/recruteurs/search", [RecruteurController::class, "searchCandidats"])->name('recruteur.search-candidats');
+    Route::get('/recruteurs/profile/{profileCandidat}', [RecruteurController::class, 'showCandidat'])->name('recruteur.show-candidat');
 
     Route::post("/recruteurs/propositions", [RecruteurController::class, "sendPropositions"])->name('recruteur.propositions-send');
-    Route::get("/recruteurs/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"])->name('recruteur.propositions');
+    Route::get("/recruteurs/propositions", [RecruteurController::class, "getAllPropositionSendedByRecruteur"])->name('recruteurs.propositions');
+    Route::get('/recruteurs/propositions/{proposition}', [RecruteurController::class, 'showProposition'])->name('recruteur.propositions.show');
     Route::get("/recruteur/dashboard", [RecruteurController::class, "dashboard"])->name('recruteur.dashboard');
-
 });
 
 Route::middleware(['auth', 'is.admin'])->group(function (){

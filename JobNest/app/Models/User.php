@@ -112,6 +112,10 @@ class User extends Authenticatable
     {
         return $this->status === StatusUser::banni;
     }
+    public function isActive(): bool
+    {
+        return $this->status === StatusUser::active;
+    }
 
 
 }
