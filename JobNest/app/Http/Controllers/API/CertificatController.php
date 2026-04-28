@@ -12,6 +12,7 @@ use App\Models\Experience;
 use App\Models\ProfileCandidat;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CertificatController extends Controller
@@ -26,79 +27,57 @@ class CertificatController extends Controller
         $this->certificationService = $certificationService;
     }
 
-
-
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $certifications = $this->certificationService->getAllCertification();
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des certifications",
-            "data" => CertificationResource::collection($certifications)
-        ]);
+        $profileCandidat = Auth::user()->profileCandidat;
+        $certifications = $this->certificationService->getAllCertification($profileCandidat);
+        return view('candidat.certifications.index', compact('certifications'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CertificationRequest $request, ProfileCandidat $profileCandidat)
+    public function create()
     {
+        return view('candidat.certifications.create');
+    }
+
+    public function store(CertificationRequest $request)
+    {
+        $profileCandidat = Auth::user()->profileCandidat;
         $certification = $this->certificationService->addCertification($request, $profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Experience ajouter avec success",
-            "data" => $certification
-        ], 201);
+        return redirect()->route('candidats.certifications.index')->with('success', 'Certification ajoutée avec succès !');
     }
 
-    /**
-     * Display the specified resource.
-     * @throws \Exception
-     */
-    public function show(Experience $certification)
-    {
-        $certification = $this->certificationService->showCertification($certification);
 
-        return response()->json([
-            "success" => true,
-            "message" => "Detail certification",
-            "data" => $certification
-        ]);
+    public function edit(Certification $certification)
+    {
+        if ($certification->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403, 'Action non autorisée');
+        }
+
+        return view('candidat.certifications.edit', compact('certification'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(CertificationRequest $request,ProfileCandidat $profileCandidat, Certification $certification)
+    public function update(CertificationRequest $request, Certification $certification)
     {
-       $this->certificationService->updateCertification($request, $certification, $profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Experience modifier avec success",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
+        if ($certification->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403);
+        }
+        $profileCandidat = Auth::user()->profileCandidat;
+        $this->certificationService->updateCertification($request, $certification, $profileCandidat);
+        return redirect()->route('candidats.certifications.index')->with('success', 'Certification mise à jour avec succès !');
 
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfileCandidat $profileCandidat, Certification $certification)
+    public function destroy(Certification $certification)
     {
-        if(!$this->certificationService->deleteCertification($certification, $profileCandidat)){
-            return response()->json([
-                "success" => false,
-                "message" => "Error lors de la suppression de la certification"
-            ]);
+        if ($certification->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403);
         }
 
-        return response()->json([
-            "success" => true,
-            "message" => "Experience supprimer avec success",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
+        $profileCandidat = Auth::user()->profileCandidat;
+        $this->certificationService->deleteCertification($certification, $profileCandidat);
+
+        return redirect()->route('candidats.certifications.index')->with('success', 'Certification supprimée avec succès !');
     }
 }

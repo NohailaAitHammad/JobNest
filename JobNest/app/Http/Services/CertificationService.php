@@ -12,28 +12,27 @@ use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class CertificationService
 {
-    public function getAllCertification()
+    public function getAllCertification(ProfileCandidat $profileCandidat)
     {
-        return Experience::all();
+        return $profileCandidat->certifications;
     }
 
     public function addCertification(CertificationRequest $request, ProfileCandidat $profileCandidat)
     {
         $validated  = $request->validated();
-        $profileCandidat->certifications()->create($validated);
+        return  $profileCandidat->certifications()->create($validated);
 
-        return $profileCandidat->load(["competences", "experiences", "certifications"]);
     }
 
-    public function showCertification(Certification $certification, ProfileCandidat $profileCandidat)
-    {
-        try {
-            $certification = $profileCandidat->certifications()->findOrFail($certification->id);
-        }catch (\Exception $exception){
-            throw $exception;
-        }
-        return $certification;
-    }
+//    public function showCertification(Certification $certification, ProfileCandidat $profileCandidat)
+//    {
+//        try {
+//            $certification = $profileCandidat->certifications()->findOrFail($certification->id);
+//        }catch (\Exception $exception){
+//            throw $exception;
+//        }
+//        return $certification;
+//    }
 
         public function updateCertification(CertificationRequest $request, Certification $certification, ProfileCandidat $profileCandidat)
     {
@@ -44,7 +43,7 @@ class CertificationService
         }
          $validated = $request->validated();
          $certification->update($validated);
-         return $profileCandidat->load(["competences", "experiences", "certifications"]);
+         return $profileCandidat;
     }
 
     public function deleteCertification(Certification $certification, ProfileCandidat $profileCandidat)
@@ -55,6 +54,6 @@ class CertificationService
             throw $exception;
         }
          $certification->delete();
-        return $profileCandidat->load(["competences", "experiences", "certifications"]);
+        return true;
     }
 }

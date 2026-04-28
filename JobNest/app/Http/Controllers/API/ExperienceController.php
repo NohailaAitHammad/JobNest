@@ -11,6 +11,7 @@ use App\Models\Experience;
 use App\Models\ProfileCandidat;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExperienceController extends Controller
 {
@@ -25,27 +26,26 @@ class ExperienceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(ProfileCandidat $profileCandidat)
+    public function index()
     {
+        $user = Auth::user();
+        $profileCandidat = $user->profileCandidat;
         $experiences = $this->experienceService->listExperiences($profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des experiences",
-            "data" =>  ExperienceResource::collection($experiences)
-        ]);
+
+        return view('candidat.experiences.index', compact('experiences'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ExperienceRequest $request, ProfileCandidat $profileCandidat)
+    public function create()
     {
-       $this->experienceService->createExperience($request,$profileCandidat );
-        return response()->json([
-            "success" => true,
-            "message" => "Experience ajouter avec success",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ], 201);
+       return view('candidat.experiences.create');
+    }
+
+
+    public function store(ExperienceRequest $request)
+    {
+        $profileCandidat = Auth::user()->profileCandidat;
+        $this->experienceService->createExperience($request, $profileCandidat);
+        return redirect()->route('candidats.experience.store')->with('success', 'Expérience ajoutée avec succès !');
     }
 
     /*
@@ -53,37 +53,37 @@ class ExperienceController extends Controller
      */
     public function show( ProfileCandidat $profileCandidat, Experience $experience)
     {
-        $this->experienceService->showExperience($experience, $profileCandidat );
-        return response()->json([
-            "success" => true,
-            "message" => "Detail d'une experience",
-            "data" => new ExperienceResource($experience)
-        ]);
+        $experience = $this->experienceService->showExperience($experience, $profileCandidat );
+        return  view('candidat.experiences.show', compact('experience'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ExperienceRequest $request, ProfileCandidat $profileCandidat, Experience $experience)
+    public function edit(Experience $experience)
     {
+        if ($experience->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403, 'Action non autorisée');
+        }
+        return view('candidat.experiences.edit', compact('experience'));
+    }
+    public function update(ExperienceRequest $request, Experience $experience)
+    {
+        if ($experience->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403);
+        }
+        $profileCandidat = Auth::user()->profileCandidat;
         $this->experienceService->updateExperience($request, $experience,$profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Experience modifier avec success",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
+        return redirect()->route('candidats.experiences.index')->with('success', 'Expérience mise à jour avec succès !');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(ProfileCandidat $profileCandidat, Experience $experience)
+    public function destroy( Experience $experience)
     {
+        if ($experience->profile_candidat_id !== Auth::user()->profileCandidat->id) {
+            abort(403);
+        }
+        $profileCandidat = Auth::user()->profileCandidat;
         $this->experienceService->deleteExpereince($profileCandidat,$experience);
-        return response()->json([
-            "success" => true,
-            "message" => "Experience supprimer avec success",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
+        return redirect()->route('candidats.experiences.index')->with('success', 'Experience est bien supprimer avec success');
     }
 }

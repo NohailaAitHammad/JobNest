@@ -104,7 +104,7 @@
     <div class="px-8 py-12 max-w-7xl mx-auto">
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-xl font-semibold text-purple-800">Recent Proposals</h2>
-            <a href="{{ route('candidat.propositions') }}"
+            <a href="{{ route('candidats.propositions.index') }}"
                class="text-sm text-purple-700 hover:underline flex items-center gap-1">
                 See more <i class="fas fa-arrow-right"></i>
             </a>
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('candidat.propositions') }}"
+                    <a href="{{ route('candidats.propositions.show', $prop->id) }}"
                        class="px-6 py-2 bg-purple-700 text-white rounded-full text-sm hover:bg-purple-800 transition-colors">
                         View Details
                     </a>

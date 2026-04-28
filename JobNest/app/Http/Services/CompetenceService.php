@@ -18,11 +18,7 @@ class CompetenceService
 
     public function addCompetence(CompetenceRequest $request)
     {
-        $validated  = $request->validated();
-
-        $competences = Competence::create($validated);
-
-        return $competences;
+        return Competence::create($request->validated());
     }
 
     public function showCompetence(Competence $competence)
@@ -42,9 +38,7 @@ class CompetenceService
         }catch (\Exception $exception){
             throw $exception;
         }
-        $validated = $request->validated();
-        $competence->libelle = $validated['libelle'];
-        $competence->save();
+        $competence->update($request->validated());
         return $competence;
     }
 
@@ -65,8 +59,8 @@ class CompetenceService
             "competences" => "array",
             "competences.*" => "exists:competences,id"
         ]);
-        $profileCandidat->competences()->sync($request->competences);
-        return $profileCandidat->load(["competences", "experiences", "certifications"]);
+        $profileCandidat->competences()->sync($validated['competences']);
+        return true;
     }
 
     public function removeCompetence( ProfileCandidat $profileCandidat, Competence $competence )

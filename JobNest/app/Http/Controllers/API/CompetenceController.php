@@ -11,6 +11,7 @@ use App\Models\Experience;
 use App\Models\Competence;
 use App\Models\ProfileCandidat;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class CompetenceController extends Controller
@@ -28,88 +29,88 @@ class CompetenceController extends Controller
      */
     public function index()
     {
-        $competences= $this->competenceService->getAllCompetences();
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des competences",
-            "data" => $competences
-        ]);
+        try {
+            $user = Auth::user();
+            $profileCandidat = $user->profileCandidat;
+            $allCompetences = $this->competenceService->getAllCompetences();
+            return view('candidat.competences.index', compact('allCompetences', 'profileCandidat'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function addCompetence(Request $request)
+    {
+        $request->validate([
+            "competences" => "required|array",
+            "competences.*" => "exists:competences,id"
+        ]);
+
+        try {
+            $profileCandidat = Auth::user()->profileCandidat;
+            $this->competenceService->add($request, $profileCandidat);
+
+            return redirect()->route('candidats.competences.index')
+                ->with('success', 'Vos compétences ont été mises à jour !');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
+        }
+    }
+
+
+    public function adminIndex()
+    {
+        $competences = $this->competenceService->getAllCompetences();
+        return view('admin.competences.index', compact('competences'));
+    }
+
+    public function create()
+    {
+        return view('admin.competences.create');
+    }
+
+
     public function store(CompetenceRequest $request)
     {
-        $this->authorize("create", Competence::class);
-        $competence = $this->competenceService->addCompetence($request);
-        return response()->json([
-            "success" => true,
-            "message" => "Competence ajouter avec success",
-            "data" => $competence
-        ], 201);
+        try {
+        $this->competenceService->addCompetence($request);
+        return redirect()->route('admin.competences.index')->with('success', 'Compétence ajoutée !');
+
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
+        }
+
     }
 
-    public function addCompetence(Request $request, ProfileCandidat $profileCandidat)
+    public function edit(Competence $competence)
     {
-        $profileCandidat = $this->competenceService->add($request, $profileCandidat);
-        return response()->json([
-            "success" => true,
-            "message" => "Competence ajouter",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
-
+        return view('admin.competences.edit', compact('competence'));
     }
 
-    public function removeCompetence(ProfileCandidat $profileCandidat, Competence $competence)
-    {
-        $this->competenceService->removeCompetence($profileCandidat, $competence);
-        return response()->json([
-            "success" => true,
-            "message" => "Competence remover",
-            "data" => new ProfileCandidatResource($profileCandidat)
-        ]);
-    }
 
-    public function show(Competence $competence)
-    {
-        //$competence = $this->competenceService->showCompetence($competence);
+//    public function show(Competence $competence)
+//    {
+//    }
 
-        return response()->json([
-            "success" => true,
-            "message" => "Detail Competence",
-            "data" => $competence
-        ]);
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(CompetenceRequest $request, Competence $competence)
     {
-        $resultCompetence = $this->competenceService->updateCompetence($request, $competence);
-        return response()->json([
-            "success" => true,
-            "message" => "Competence modifier avec success",
-            "data" => $resultCompetence
-        ]);
-
+        try {
+        $this->competenceService->updateCompetence($request, $competence);
+        return redirect()->route('admin.competences.index')->with('success', 'Compétence modifiée !');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
+        }
     }
 
 
     public function destroy(Competence $competence)
     {
-        $this->authorize("delete", Competence::class);
-        if(!$this->competenceService->deleteCompetence($competence)){
-            return response()->json([
-                "success" => false,
-                "message" => "Error lors de la suppression de la competence"
-            ]);
+        try {
+        $this->competenceService->deleteCompetence($competence);
+        return redirect()->route('admin.competences.index')->with('success', 'Compétence supprimée !');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erreur : ' . $e->getMessage());
         }
-
-        return response()->json([
-            "success" => true,
-            "message" => "Competence supprimer avec success"
-        ]);
     }
 }

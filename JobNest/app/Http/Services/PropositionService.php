@@ -80,6 +80,9 @@ class PropositionService
         }
 
         $proposition->update(['status'=> StatusProp::accepter]);
+        Proposition::where('id', '!=', $proposition->id)
+            ->where('status', StatusProp::pending)
+            ->update(['status'=> StatusProp::refuser]);
         return $proposition;
     }
 

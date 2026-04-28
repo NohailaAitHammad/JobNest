@@ -13,10 +13,17 @@
                         <h1 class="text-3xl font-bold mb-2">{{ $user->firstName }} {{ $user->lastName }}</h1>
                         <p class="text-purple-700 text-xl mb-6">Candidat</p>
 
-
-                        <a href="{{ route('candidat.edit') }}" class="px-8 py-3 bg-purple-700 text-white rounded-full font-medium hover:bg-purple-800 transition-colors">
-                            Modifier mon profil
-                        </a>
+                        <div class="flex flex-col gap-3">
+                            <a href="{{ route('candidat.edit') }}" class="px-8 py-3 bg-purple-700 text-white rounded-full font-medium hover:bg-purple-800 transition-colors">
+                                Modifier mon profil
+                            </a>
+                            <a href="{{ route('candidats.experiences.index') }}" class="px-8 py-3 bg-white border-2 border-purple-700 text-purple-700 rounded-full font-medium hover:bg-purple-50 transition-colors text-center">
+                                Gérer mes expériences
+                            </a>
+                            <a href="{{ route('candidats.competences.index') }}" class="px-8 py-3 bg-white border-2 border-purple-700 text-purple-700 rounded-full font-medium hover:bg-purple-50 transition-colors text-center">
+                                Gérer mes competences
+                            </a>
+                        </div>
                     </div>
 
                     <div class="space-y-4 text-left max-w-sm mx-auto">
@@ -54,7 +61,12 @@
                     </div>
 
                     <div class="mb-8">
-                        <h2 class="text-xl font-bold mb-4">Expériences Professionnelles</h2>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold">Expériences Professionnelles</h2>
+                            <a href="{{ route('candidats.experiences.index') }}" class="text-sm text-purple-600 hover:underline flex items-center gap-1">
+                                Gérer tout <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
                         <div class="space-y-4">
                             @forelse($profile->experiences as $exp)
                                 <div>
@@ -68,7 +80,12 @@
                     </div>
 
                     <div class="mb-8">
-                        <h2 class="text-xl font-bold mb-4">Certifications</h2>
+                        <div class="flex justify-between items-center mb-4">
+                            <h2 class="text-xl font-bold">Certifications</h2>
+                            <a href="{{ route('candidats.certifications.index') }}" class="text-sm text-purple-600 hover:underline flex items-center gap-1">
+                                Gérer tout <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
                         <div class="space-y-4">
                             @forelse($profile->certifications as $cert)
                                 <div>

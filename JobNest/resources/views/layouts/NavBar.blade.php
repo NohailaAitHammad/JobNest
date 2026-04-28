@@ -16,7 +16,7 @@
                     <a href="{{ route('recruteur.search-candidats') }}" class="text-gray-600 hover:text-purple-700 transition-colors">Search Talents</a>
                 @else
                     <a href="{{ route('candidat.dashboard') }}" class="text-purple-700">Dashboard</a>
-                    <a href="{{ route('candidat.propositions') }}" class="text-gray-600 hover:text-purple-700 transition-colors">My Propositions</a>
+                    <a href="{{ route('candidats.propositions.index') }}" class="text-gray-600 hover:text-purple-700 transition-colors">My Propositions</a>
                 @endif
             </div>
 

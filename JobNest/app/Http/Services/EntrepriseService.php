@@ -9,7 +9,7 @@ class EntrepriseService
 
     public function getAllEntreprises()
     {
-       return  Entreprise::all()->latest()->paginate(5);
+       return  Entreprise::all();
     }
 
 }
