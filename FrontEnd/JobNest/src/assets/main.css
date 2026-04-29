@@ -1,5 +1,13 @@
-@import './base.css';
 @import "tailwindcss";
+
+body { font-family: 'Inter', sans-serif; }
+.purple-gradient { background: linear-gradient(135deg, #581c87 0%, #7c3aed 100%); }
+.hero-bg { background: linear-gradient(135deg, #7C3AED 0%, #6D28D9 50%, #5B21B6 100%); position: relative; overflow: hidden; }
+.hero-bg::before { content: ''; position: absolute; top: -50%; right: -10%; width: 500px; height: 500px; background: rgba(255,255,255,0.1); border-radius: 50%; blur: 40px; }
+.glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+.status-pending { color: #2563EB; }
+.status-accepted { color: #16A34A; }
+.status-rejected { color: #DC2626; }
 /*#app {*/
 /*  max-width: 1280px;*/
 /*  margin: 0 auto;*/

@@ -13,7 +13,7 @@ class ExperienceService
 
     public function listExperiences(ProfileCandidat $profileCandidat)
     {
-       return  $profileCandidat->experiences()->latest()->get();
+       return  $profileCandidat->experiences;
     }
 
     public function showExperience(Experience $experience, ProfileCandidat $profileCandidat)
@@ -31,7 +31,7 @@ class ExperienceService
     {
         $validated  = $request->validated();
          $profileCandidat->experiences()->create($validated);
-         return $profileCandidat->load(["competences", "experiences", "certifications"]);
+         return ;
     }
 
     public function updateExperience(ExperienceRequest $request, Experience $experience, ProfileCandidat $profileCandidat)
@@ -43,7 +43,7 @@ class ExperienceService
             throw new $exception;
         }
         $experience->update($validated);
-        return $profileCandidat->load(["competences", "experiences", "certifications"]);
+        return $profileCandidat;
     }
 
     public function deleteExpereince(ProfileCandidat $profileCandidat, Experience $experience)
@@ -54,7 +54,7 @@ class ExperienceService
         }catch(NotFoundHttpException $exception){
             throw new $exception;
         }
-        $experience->delete();
+        return $experience->delete();
     }
 }
 

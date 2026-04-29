@@ -27,8 +27,32 @@ class CandidatService
     public function updateProfile(ProfileCandidatRequest $request, ProfileCandidat $profileCandidat)
     {
         $validated = $request->validated();
-        $validated["est_visible"] = true;
-        $profileCandidat->update($validated);
+        $userData = [
+            'firstName' => $validated['firstName'] ?? $profileCandidat->user->firstName,
+            'lastName'  => $validated['lastName'] ?? $profileCandidat->user->lastName,
+            'email'     => $validated['email'] ?? $profileCandidat->user->email,
+        ];
+        $profileCandidat->user->update($userData);
+
+        $profileData = array_intersect_key($validated, array_flip([
+            'ville', 'telephone', 'est_visible'
+        ]));
+        $profileData['est_visible'] = true;
+
+        $profileCandidat->update($profileData);
+
+        if ($request->hasFile('imageURL')) {
+            $this->uploadImage($request, $profileCandidat);
+        }
+
+        if ($request->hasFile('cv_url')) {
+            $this->uploadCV($request, $profileCandidat);
+        }
+
+        if ($request->hasFile('portfolio_url')) {
+            $this->uploadPortfolio($request, $profileCandidat);
+        }
+
         return $profileCandidat->load(["user", "competences", "certifications", "experiences"]);
     }
 
@@ -43,9 +67,6 @@ class CandidatService
 
     public function uploadCV(Request $request, ProfileCandidat $profileCandidat)
     {
-//        $request->validate([
-//            "cv_url" => "required|file|mimes:pdf|max:2048"
-//        ]);
         $file = $request->file('cv_url');
         if($file !== null && !$file->getError()){
             if($profileCandidat->cv_url && Storage::disk("public")->exists($profileCandidat->cv_url)){
@@ -58,9 +79,6 @@ class CandidatService
     }
     public function uploadPortfolio(Request $request, ProfileCandidat $profileCandidat)
     {
-//        $request->validate([
-//            "portfolio_url" => "required|file|mimes:pdf|max:2048"
-//        ]);
         $file = $request->file('portfolio_url');
         if($file !== null && !$file->getError()){
             if($profileCandidat->portfolio_url && Storage::disk('public')->exists($profileCandidat->portfolio_url)){
@@ -74,22 +92,17 @@ class CandidatService
 
     public function uploadImage(Request $request, ProfileCandidat $profileCandidat)
     {
-//        $request->validate([
-//            "imageURL" => "required|image|mimes:jpeg,jpg,png,gif"
-//        ]);
         $file = $request->file('imageURL');
-        $new_name = rand() . '.' . $file->getClientOriginalExtension();
 
         if($file !== null && !$file->getError()){
-            if($profileCandidat->imageURL && Storage::disk("public")->exists($profileCandidat->imageURL)){
+            if($profileCandidat->imageURL && Storage::disk("public")->exists($profileCandidat->imageURL)) {
                 Storage::disk("public")->delete($profileCandidat->imageURL);
             }
             $path = $file->store('images', 'public');
-            //$path = $file->move(public_path('images' . $new_name));
-      }
-
-      $profileCandidat->update(['imageURL' => $path]);
-      return $path;
+            $profileCandidat->update(['imageURL' => $path]);
+            return $path;
+            }
+            return $profileCandidat->imageURL;
     }
     public function addExperience()
     {
@@ -129,14 +142,10 @@ class CandidatService
     public function deleteProfileCandidat(Request $request, ProfileCandidat $profileCandidat)
     {
         if($request->user()->id!== $profileCandidat->user_id){
-            return response()->json([
-                "success" => false,
-                "message" => "Unauthorized"
-            ], 403);
+            return false;
         }
-        $request->user()->currentAccessToken()->delete();
-
         $profileCandidat->delete();
         $request->user()->delete();
+        return true;
     }
 }

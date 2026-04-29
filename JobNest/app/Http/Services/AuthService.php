@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use const http\Client\Curl\AUTH_ANY;
 
 class AuthService
 {
@@ -26,47 +27,18 @@ class AuthService
             'role_id' => $role,
             'status' => StatusUser::active,
             ]);
-        $token = $user->createToken('my_app_token')->plainTextToken;
-        //$user->load('role');
-        return [
-            "user" => $user,
-            "token" => $token
-        ];
+        $request->session()->regenerate();
+        return $user;
     }
 
     public function  login(LoginRequest $request)
     {
         $data = $request->validated();
         if(Auth::attempt($data)){
-            if($request->user()->role->role === RoleUser::recruteur ){
-                $recruter = $request->user();
-                $token  = $recruter->createToken('my_app_token')->plainTextToken;
-                return [
-                    'user' => $recruter,
-                    'token' => $token
-                ];
-            }else if($request->user()->role->role === RoleUser::candidat){
-                $condidat = $request->user();
-                $token  = $condidat->createToken('my_app_token')->plainTextToken;
-                return [
-                    'user' => $condidat,
-                    'token' => $token
-                ];
-            }else {
-                $admin = $request->user();
-                $token  = $admin->createToken('my_app_token')->plainTextToken;
-                return [
-                    'user' => $admin,
-                    'token' => $token
-                ];
-            }
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Identifiants incorrects',
-            ], 401);
-
+            $request->session()->regenerate();
+            return Auth::user();
         }
+            return false;
     }
 
 }

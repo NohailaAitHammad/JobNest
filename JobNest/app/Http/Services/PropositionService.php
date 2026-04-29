@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Enums\StatusProp;
+use App\Enums\StatusUser;
 use App\Http\Requests\PropositionRequest;
 use App\Models\ProfileCandidat;
 use App\Models\Proposition;
@@ -14,20 +15,18 @@ class PropositionService
 
     public function getAllPropositionSendedByRecruteur(User $user)
     {
-//        return Proposition::where("recruteur_id", $user->id)
-//            ->with(['candidat', 'recruteur'])
-//            ->latest()
-//            ->get();
-        return $user->propositionsEnvoyees;
+        return $user->propositionsEnvoyees()
+            ->with('candidat')
+            ->latest()
+            ->paginate(5);
     }
 
     public function getAllPropositionReceivedByCandidat(User $user)
     {
-//        return Proposition::where("candidat_id", $user->id)
-//            ->with('recruteur')
-//            ->latest()
-//            ->get();
-        return $user->propositionsRecues;
+        return $user->propositionsRecues()
+            ->with('recruteur')
+            ->latest()
+            ->paginate(5);
     }
 
     public function sendPropositions(PropositionRequest $request,User $recruteur, User $candidat)
@@ -42,6 +41,7 @@ class PropositionService
 
         try {
             $recruteur = User::where('id', $recruteur->id)
+                ->where('status', StatusUser::active)
                 ->firstOrFail();
         }catch (NotFoundHttpException $exception){
             throw new $exception;
@@ -49,9 +49,10 @@ class PropositionService
 
         $exist = Proposition::where('recruteur_id', $recruteur->id)
                 ->where('candidat_id', $candidat->id)
+                ->where('status', StatusProp::pending)
                 ->exists();
         if($exist){
-            throw new \Exception("Propositon deja envoyer a ce candidat");
+            throw new \Exception("Proposition deja envoyer a ce candidat avec un status Pending ");
         }
 
         $validated = $request->validated();
@@ -80,6 +81,9 @@ class PropositionService
         }
 
         $proposition->update(['status'=> StatusProp::accepter]);
+        Proposition::where('id', '!=', $proposition->id)
+            ->where('status', StatusProp::pending)
+            ->update(['status'=> StatusProp::refuser]);
         return $proposition;
     }
 

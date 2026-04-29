@@ -90,7 +90,7 @@ class User extends Authenticatable
     // Helpers
     public function hasRole(string $role): bool
     {
-        return $this->roles()->where('role', $role)->exists();
+        return $this->role()->where('role', $role)->exists();
     }
 
     public function isCandidat(): bool
@@ -111,6 +111,10 @@ class User extends Authenticatable
     public function isBanned(): bool
     {
         return $this->status === StatusUser::banni;
+    }
+    public function isActive(): bool
+    {
+        return $this->status === StatusUser::active;
     }
 
 

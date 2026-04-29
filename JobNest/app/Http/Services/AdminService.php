@@ -11,12 +11,16 @@ use App\Models\User;
 
 class AdminService
 {
-
-    public function toggleUserStatus(User $user): User
+    public function getUsers()
     {
-        //$user = User::findOrFail($userId);
-        $user->update(['status' => !$user->status]);
-        return $user->fresh();
+        return User::with('role')->paginate(10);
+    }
+
+    public function toggleUserStatus(User $user)
+    {
+        $newStatus = ($user->status->value === StatusUser::active->value)
+            ? StatusUser::banni : StatusUser::active;
+        return $user->update(['status' => $newStatus]);
     }
 
     public function deleteUser(User $user): void
@@ -34,7 +38,7 @@ class AdminService
             'accepted_props'     => Proposition::where('status', 'accepted')->count(),
             'rejected_props'     => Proposition::where('status', 'rejected')->count(),
             'pending_props'      => Proposition::where('status', 'pending')->count(),
-            'visible_profiles'   => ProfileCandidat::where('status', StatusUser::active)->count(),
+            'visible_profiles'   => ProfileCandidat::where('est_visible', true)->count(),
         ];
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class CertificationRequest extends FormRequest
 {
@@ -26,6 +28,16 @@ class CertificationRequest extends FormRequest
             "titre" => ["sometimes","required", "string", "max:255"],
             "organisme" =>  ["sometimes","required", "string", "max:255"],
             "dateObtention" => ["sometimes","required", "date", "before_or_equal:today"]
+        );
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
         );
     }
 }

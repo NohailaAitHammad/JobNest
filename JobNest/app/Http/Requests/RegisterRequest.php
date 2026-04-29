@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Validator;
 
 class RegisterRequest extends FormRequest
 {
@@ -27,5 +29,24 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:6', 'confirmed'],
         ];
+    }
+    public function messages()
+    {
+        return [
+            'firstName' => 'First Name is required',
+            'lastName' => 'Last Name is required',
+            'email.unique' => "L'adresse email est déjà utilisée.",
+            'password:min' => "Le mot de passe doit contenir au moins 8 caractères."
+        ];
+    }
+
+    protected function failedValidation(Validator|\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            redirect()
+                ->back()
+                ->withErrors($validator->errors())
+                ->withInput()
+        );
     }
 }
