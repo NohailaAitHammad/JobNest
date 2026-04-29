@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
 use App\Http\Services\AdminService;
 use App\Models\User;
 use Illuminate\Http\Request;

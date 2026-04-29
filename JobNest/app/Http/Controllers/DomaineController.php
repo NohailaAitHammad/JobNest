@@ -1,13 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\DomaineRequest;
-use App\Http\Resources\DomaineResource;
 use App\Http\Services\DomaineService;
 use App\Models\Domaine;
-use Illuminate\Http\Request;
 
 class DomaineController extends Controller
 {

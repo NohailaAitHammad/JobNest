@@ -1,19 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\FilterCandidatsRequest;
 use App\Http\Requests\PropositionRequest;
 use App\Http\Requests\RecruteurRequest;
-use App\Http\Resources\ProfileCandidatResource;
-use App\Http\Resources\ProfileRecruteurResource;
-use App\Http\Resources\PropositionResource;
 use App\Http\Services\DashboardService;
 use App\Http\Services\PropositionService;
 use App\Http\Services\RecruteurService;
 use App\Models\ProfileCandidat;
-use App\Models\ProfileRecruteur;
 use App\Models\Proposition;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -163,6 +157,7 @@ class RecruteurController extends Controller
         $stats = $this->dashboardService->recruiterDashboard($profileRecruteur);
 
         $propositions = $this->propositionService->getAllPropositionSendedByRecruteur($user);
+
 
         return view('recruteur.dashboard', compact('user', 'stats', 'propositions'));
     }

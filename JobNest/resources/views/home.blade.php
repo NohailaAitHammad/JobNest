@@ -5,10 +5,13 @@
         <div>
             <h1 class="text-5xl font-bold leading-tight mb-6">Because Your <span class="text-purple-700">Talent</span><br>Deserves to Be <span class="text-purple-700">Seen</span>.</h1>
             <p class="text-gray-600 text-lg mb-8 leading-relaxed">JobNest reimagines recruitment by shifting the focus to candidates. Create your professional profile, highlight your strengths, and let companies reach out to you.</p>
-            <div class="flex gap-4">
-                <a href="auth/signUpRecruteur.html" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Hire Talent</a>
-                <a href="auth/signUpCandidat.html" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Find a Job</a>
-            </div>
+            @guest()
+                <div class="flex gap-4">
+                    <a href="{{ route('register.show.recruteur') }}" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Hire Talent</a>
+                    <a href="{{ route('register.show.candidat') }}" class="px-8 py-3 border border-purple-700 text-purple-700 rounded-lg font-medium hover:bg-purple-50 transition-colors">Find a Job</a>
+                </div>
+            @endguest
+
         </div>
         <div class="relative">
             <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&auto=format&fit=crop" alt="Team collaboration" class="rounded-2xl shadow-2xl">

@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\API\AdminController;
-use App\Http\Controllers\API\DomaineController;
-use App\Http\Controllers\API\RecruteurController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\CertificatController;
 use App\Http\Controllers\CompetenceController;
+use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\ExperienceController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PropositionController;
+use App\Http\Controllers\RecruteurController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/',
@@ -35,7 +36,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 
 Route::middleware(['auth', 'is.candidat'])->group(callback: function () {
 
-    /* gestion du profile candidat */
+    /* gestion du profil candidat */
     Route::get("/candidats/profile", [CandidatController::class, "show"])->name('candidat.show');
     Route::get("/candidat/profile/edit", [CandidatController::class, 'edit'])->name('candidat.edit');
     Route::put("/candidats/profile", [CandidatController::class, "update"])->name('candidat.profile.update');
@@ -123,4 +124,10 @@ Route::middleware(['auth', 'is.admin'])->group(function (){
     Route::put("/admin/domaines/{domaine}", [DomaineController::class, "update"])->name('admin.domaines.update');
     Route::delete("/admin/domaines/{domaine}", [DomaineController::class, "destroy"])->name('admin.domaines.destroy');
 
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markRead');
+    Route::get('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
 });

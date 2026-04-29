@@ -27,6 +27,7 @@ class AuthService
             'role_id' => $role,
             'status' => StatusUser::active,
             ]);
+        $request->session()->regenerate();
         return $user;
     }
 
@@ -34,6 +35,7 @@ class AuthService
     {
         $data = $request->validated();
         if(Auth::attempt($data)){
+            $request->session()->regenerate();
             return Auth::user();
         }
             return false;

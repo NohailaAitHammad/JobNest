@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Resources\EntrepriseResource;
+use App\Http\Controllers\API\EntreRequest;
 use App\Http\Services\EntrepriseService;
 use Illuminate\Http\Request;
 
@@ -17,11 +16,7 @@ class EntrepriseController extends Controller
     public function index()
     {
         $entreprises = $this->entrepriseService->getAllEntreprises();
-        return response()->json([
-            "success" => true,
-            "message" => "Liste des entreprises",
-            "data" => EntrepriseResource::collection($entreprises)
-        ]);
+
     }
 
     /**

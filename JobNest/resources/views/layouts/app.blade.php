@@ -33,4 +33,22 @@
 @include('layouts.footer')
 
 </body>
+
+
+<script>
+    function toggleNotifications() {
+        const dropdown = document.getElementById('notifications-dropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.relative')) {
+            const dropdown = document.getElementById('notifications-dropdown');
+            if (dropdown) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    }
+</script>
+
 </html>

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Request;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,28 +20,39 @@ return Application::configure(basePath: dirname(__DIR__))
                 'is.admin'     => \App\Http\Middleware\IsAdmin::class,
                 'is.candidat'  => \App\Http\Middleware\IsCandidat::class,
                 'is.recruteur' => \App\Http\Middleware\IsRecruteur::class
-                ]
+            ]
         );
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (AuthenticationException $e, $request){
-            return response()->json([
-                'success' => false,
-                'message' => 'Non authentifié.',
-            ], 401);
+
+        $exceptions->render(function (AuthenticationException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Non authentifié.',
+                ], 401);
+            }
+            return redirect()->route('show.login')->with('error', 'Veuillez vous connecter pour accéder à cette page.');
         });
 
-        $exceptions->render(function (ModelNotFoundException $e, $request){
-            return response()->json([
-                'success' => false,
-                'message' => 'Ressource introuvable',
-            ], 404);
+        $exceptions->render(function (ModelNotFoundException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ressource introuvable',
+                ], 404);
+            }
+            return redirect()->route('home')->with('error', 'Désolé, la ressource demandée est introuvable.');
         });
-        $exceptions->render(function (ValidationException $e, $request){
-            return response()->json([
-                'success' => false,
-                'message' => 'Error de validation',
-                'errors' => $e->errors(),
-            ], 422);
+
+        $exceptions->render(function (ValidationException $e, Request $request) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Error de validation',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+            throw $e;
         });
     })->create();

@@ -31,17 +31,12 @@
                         <input type="tel" name="telephone" value="{{ $profile->telephone?? '' }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
                         @error('telephone') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
-                    <div class="flex flex-col">
-                        <label class="block text-sm font-bold mb-2">Ville</label>
-                        <input type="text" name="ville" value="{{ $profile->ville ?? '' }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
-                        @error('ville') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="flex flex-col">
-                        <label class="block text-sm font-bold mb-2">Domaine</label>
-                        <input type="text" name="domaine" placeholder="Ex: Design" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 appearance-none bg-white cursor-pointer">
-                    </div>
                 </div>
-
+                <div class="flex flex-col">
+                    <label class="block text-sm font-bold mb-2">Ville</label>
+                    <input type="text" name="ville" value="{{ $profile->ville ?? '' }}" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
+                    @error('ville') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="flex flex-col">
                         <label class="block text-sm font-bold mb-2">Upload Resume (PDF)</label>
@@ -64,19 +59,6 @@
             </form>
 
             <hr class="my-8 border-gray-200">
-
-            <h2 class="text-xl font-bold mb-6">Privacy & Security</h2>
-
-            <div class="mb-8">
-                <h3 class="font-bold mb-4">Change Password</h3>
-                <form action="#" method="POST" class="space-y-4 max-w-md">
-                    @csrf
-                    <input type="password" placeholder="Old Password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
-                    <input type="password" placeholder="New Password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
-                    <input type="password" placeholder="Confirm New Password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-purple-600 form-input">
-                    <button class="px-6 py-2 bg-purple-700 text-white rounded-lg hover:bg-purple-800 transition-colors text-sm">Update Password</button>
-                </form>
-            </div>
 
             <div class="mb-8">
                 <h3 class="font-bold mb-4">Profile Visibility</h3>
