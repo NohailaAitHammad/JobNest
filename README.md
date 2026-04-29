@@ -1,0 +1,103 @@
+```markdown
+# 🚀 JobNest - Plateforme de Mise en Relation Talents & Recruteurs
+
+**JobNest** est une application web moderne conçue pour simplifier la rencontre entre les talents (candidats) et les entreprises (recruteurs). Le projet permet aux candidats de mettre en avant leur expertise via un profil détaillé et aux recruteurs de dénicher les meilleurs profils grâce à un système de filtrage avancé.
+
+---
+
+## 📖 À propos du Projet
+
+L'objectif de JobNest est de transformer la recherche d'emploi en une expérience fluide et visuelle. Initialement conçu comme une API, le projet a été refactorisé vers une **architecture monolithique avec Laravel Blade** pour optimiser l'expérience utilisateur (UX), simplifier la gestion des sessions et accélérer le rendu des pages.
+
+### 🛠️ Stack Technique
+- **Backend :** Laravel 10+ (PHP 8.2+)
+- **Frontend :** Blade Templates, Tailwind CSS (Design moderne et responsive)
+- **Base de données :** MySQL (Relations complexes : One-to-One, One-to-Many, Many-to-Many)
+- **Sécurité :** Middlewares de rôles , Validation stricte via FormRequests, Protection CSRF.
+
+---
+
+## 🌟 Fonctionnalités Clés
+
+### 👤 Espace Candidat (Le Talent)
+Le candidat est au centre du système. Il peut construire son image professionnelle :
+- **Profil Dynamique :** Gestion des informations personnelles et visibilité du profil.
+- **Portfolio Professionnel :** 
+  - CRUD complet pour les **Expériences** et les **Certifications**.
+  - Gestion des **Compétences** via une bibliothèque globale (Many-to-Many).
+- **Documents :** Upload sécurisé de CV et de Portfolio (PDF) et image de profil.
+- **Gestion d'Offres :** Consultation des propositions reçues avec possibilité d'**Accepter** ou de **Refuser**.
+
+### 💼 Espace Recruteur (L'Entreprise)
+Le recruteur dispose d'outils de "sourcing" pour trouver la perle rare :
+- **Profil Entreprise :** Gestion des informations de la société, du poste et des domaines d'activité.
+- **Moteur de Recherche Avancé :** Filtrage des candidats par ville, statut, niveau d'expertise et compétences spécifiques.
+- **Système de Proposition :** Envoi d'offres personnalisées (Stage, Emploi, Alternance) aux candidats visibles.
+- **Suivi :** Tableau de bord pour suivre l'état des propositions (En attente, Acceptées, Refusées).
+
+### 🛡️ Espace Administrateur (Le Contrôle)
+L'administrateur assure la qualité et la sécurité de la plateforme :
+- **Gestion des Utilisateurs :** Liste complète des membres avec possibilité de **Bannir** ou **Débannir** un utilisateur en un clic.
+- **Bibliothèque Globale :** Gestion (CRUD) des compétences et des domaines d'activité disponibles pour tous.
+- **Statistiques Globales :** Vue d'ensemble sur le nombre d'utilisateurs, de propositions et l'activité générale.
+
+---
+
+## ⚙️ Architecture & Choix Techniques
+
+### 🧩 Design Pattern : Service Layer
+Pour éviter que les contrôleurs ne deviennent trop lourds, j'ai implémenté un **Service Layer**. Toute la logique métier (calculs, enregistrements, uploads) est isolée dans des classes `Service`. 
+*   *Avantage :* Code réutilisable, facile à tester et maintenance simplifiée.
+
+### 🚦 Gestion des Rôles & Sécurité
+L'accès aux fonctionnalités est strictement contrôlé par des Middlewares personnalisés :
+- `IsAdmin` : Accès restreint au panel de gestion.
+- `IsCandidat` : Accès aux outils de candidat.
+- `IsRecruteur` : Accès aux outils de recrutement.
+
+### 📊 Enums PHP 8
+Pour éviter les erreurs de frappe et sécuriser les statuts (ex: `pending`, `accepted`, `rejected`), j'ai utilisé les **Enums PHP**. Cela garantit l'intégrité des données en base de données.
+
+---
+
+## 🚀 Installation Rapide
+
+1. **Cloner le projet**
+   ```bash
+   git clone https://github.com/ton-username/jobnest.git
+   cd jobnest
+   ```
+
+2. **Installer les dépendances**
+   ```bash
+   composer install
+   npm install && npm run dev
+   ```
+
+3. **Configuration**
+    - Copier le fichier `.env.example` vers `.env`.
+    - Configurer la base de données dans le fichier `.env`.
+    - Générer la clé d'application : `php artisan key:generate`.
+
+4. **Migration & Seed**
+   ```bash
+   php artisan migrate --seed
+   ```
+
+5. **Lien de stockage** (Indispensable pour les images et CV)
+   ```bash
+   php artisan storage:link
+   ```
+
+6. **Lancer le serveur**
+   ```bash
+   php artisan serve
+```
+
+---
+
+## 📈 Évolutions Futures
+- [ ] Mise en place d'un système de notifications en temps réel (WebSockets).
+- [ ] Ajout d'un chat interne entre recruteurs et candidats.
+- [ ] Système de matching automatique basé sur les compétences.
+```
